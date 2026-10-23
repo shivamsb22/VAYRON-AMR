@@ -1,22 +1,29 @@
 
 <div align="center">
 
-# 🟢 VAYRON-AMR
+<img src="docs/images/vayron-banner.png" alt="VAYRON-AMR | Autonomous Mobile Robotics Platform" width="100%">
+
+<br>
+
+# VAYRON-AMR
 
 ### AUTONOMOUS MOBILE ROBOTICS PLATFORM
 
-**Engineering Intelligent Mobility Through Robotics, Simulation & Control**
+**Design · Simulate · Integrate · Navigate**
 
-A modular four-wheel differential-drive mobile robot project built with ROS 2, focused on robot modeling, sensor integration, simulation, motor control, and the development of autonomous navigation capabilities.
+A modular four-wheel differential-drive Autonomous Mobile Robot project focused on robot modeling, embedded motor control, sensor integration, simulation, mapping, and autonomous navigation using ROS 2.
 
-[![ROS 2 Humble](https://img.shields.io/badge/ROS_2-Humble-39FF14?style=for-the-badge&logo=ros&logoColor=000000)](https://docs.ros.org/en/humble/)
-[![Ubuntu 22.04](https://img.shields.io/badge/Ubuntu-22.04-39FF14?style=for-the-badge&logo=ubuntu&logoColor=000000)](https://releases.ubuntu.com/22.04/)
-[![Gazebo Classic](https://img.shields.io/badge/Simulation-Gazebo_Classic-39FF14?style=for-the-badge)](https://classic.gazebosim.org/)
-[![RViz2](https://img.shields.io/badge/Visualization-RViz2-39FF14?style=for-the-badge)](https://github.com/ros2/rviz)
+<br>
 
-[**Repository**](https://github.com/shivamsb22/VAYRON-AMR) ·
-[**Report an Issue**](https://github.com/shivamsb22/VAYRON-AMR/issues) ·
-[**ROS 2 Documentation**](https://docs.ros.org/en/humble/)
+[![ROS 2](https://img.shields.io/badge/ROS_2-Humble-00E5FF?style=for-the-badge&logo=ros&logoColor=black)](https://docs.ros.org/en/humble/)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04-1677FF?style=for-the-badge&logo=ubuntu&logoColor=white)](https://releases.ubuntu.com/22.04/)
+[![Gazebo](https://img.shields.io/badge/Gazebo-Classic-00E5FF?style=for-the-badge)](https://classic.gazebosim.org/)
+[![RViz2](https://img.shields.io/badge/Visualization-RViz2-1677FF?style=for-the-badge)](https://github.com/ros2/rviz)
+[![Platform](https://img.shields.io/badge/Platform-AMR-00B8D9?style=for-the-badge)](https://github.com/shivamsb22/VAYRON-AMR)
+
+[**📂 Repository**](https://github.com/shivamsb22/VAYRON-AMR) ·
+[**🐛 Report an Issue**](https://github.com/shivamsb22/VAYRON-AMR/issues) ·
+[**📘 ROS 2 Documentation**](https://docs.ros.org/en/humble/)
 
 <br>
 
@@ -26,171 +33,289 @@ A modular four-wheel differential-drive mobile robot project built with ROS 2, f
 
 ---
 
-## 01 — Overview
+## 📑 Table of Contents
 
-VAYRON-AMR is a mobile robotics platform being developed to explore the integration of mechanical design, embedded motor control, robot simulation, perception, and autonomous navigation.
+1. [Project Overview](#-1-project-overview)
+2. [Project Objectives](#-2-project-objectives)
+3. [Robot Specifications](#-3-robot-specifications)
+4. [Hardware Components](#-4-hardware-components)
+5. [Software and Technologies](#-5-software-and-technologies)
+6. [System Architecture](#-6-system-architecture)
+7. [Robot Drive Mechanism](#-7-robot-drive-mechanism)
+8. [ROS 2 Workspace Structure](#-8-ros-2-workspace-structure)
+9. [Installation and Setup](#-9-installation-and-setup)
+10. [Build and Launch](#-10-build-and-launch)
+11. [Verification and Testing](#-11-verification-and-testing)
+12. [Development Roadmap](#-12-development-roadmap)
+13. [Troubleshooting](#-13-troubleshooting)
+14. [Engineering Principles](#-14-engineering-principles)
+15. [Contributing](#-15-contributing)
+16. [License](#-16-license)
 
-The platform uses a **four-wheel differential-drive configuration**. The left-side wheels operate as one drive group and the right-side wheels as the other. By controlling the relative speeds and directions of these groups, the robot can move forward, reverse, turn, and rotate in place, subject to its mechanical design and traction.
+---
 
-The project combines two development areas:
+## 🤖 1. Project Overview
 
-- **Embedded robotics:** Arduino-based motor control and a four-channel motor driver.
-- **ROS 2 robotics:** Robot description, simulation, coordinate frames, sensor visualization, and the development of control and navigation software.
+**VAYRON-AMR** is an autonomous mobile robotics development platform designed to integrate mechanical systems, embedded electronics, robot modeling, simulation, perception, and navigation within a modular robotics software architecture.
 
-The objective is to build and validate the software architecture in simulation before integrating and testing the corresponding physical hardware.
+The platform uses a **four-wheel differential-drive configuration**. The four wheels are arranged into two drive groups: left and right. The robot's motion is controlled by varying the direction and speed of these groups.
 
-## 02 — Project Objectives
+The project combines two major engineering domains:
 
-- Develop a modular robot description using URDF and Xacro.
-- Model the four-wheel differential-drive platform.
-- Simulate the robot in Gazebo Classic.
-- Visualize the robot model, transforms, and sensor data in RViz2.
-- Establish a reliable interface between high-level robot commands and embedded motor control.
-- Integrate LiDAR-based perception and mapping.
-- Develop localization and autonomous navigation capabilities.
-- Maintain a modular, documented, and reproducible ROS 2 workspace.
+- **Embedded systems:** Arduino-based motor-control logic and a four-channel motor driver.
+- **Robotics software:** ROS 2 Humble, URDF/Xacro, Gazebo Classic, RViz2, sensor integration, and planned mapping and navigation capabilities.
 
-## 03 — Robot Specifications
+Development follows a simulation-first approach wherever possible. Robot geometry, coordinate frames, sensor configuration, and software integration can be evaluated in simulation before equivalent behavior is validated on physical hardware.
 
-| Parameter | Description |
+### Key Engineering Areas
+
+| Area | Purpose |
 |---|---|
-| Robot name | VAYRON-AMR |
-| Robot category | Autonomous Mobile Robot (AMR) |
+| Robot modeling | Define robot geometry, links, joints, and coordinate frames |
+| Embedded control | Interface with the motor driver and manage motor commands |
+| Simulation | Test robot models and supported sensors in a virtual environment |
+| Perception | Integrate range-sensing data and sensor coordinate frames |
+| Mapping | Develop LiDAR-based environment mapping |
+| Localization | Estimate the robot's position within a map |
+| Navigation | Develop goal-directed motion and obstacle-aware planning |
+| Integration | Connect hardware interfaces and ROS 2 software components |
+
+> **Development status:** This repository contains the initial robot model and launch integration. A configured sensor or a created package does not, by itself, establish that complete autonomous navigation or physical motor control is operational.
+
+## 🎯 2. Project Objectives
+
+- Build a modular robot model using URDF and Xacro.
+- Model a four-wheel differential-drive AMR.
+- Simulate the robot in Gazebo Classic.
+- Visualize the robot, TF frames, and supported sensor data in RViz2.
+- Integrate Arduino-based motor control through a suitable hardware interface.
+- Develop reliable velocity-command and motor-control workflows.
+- Integrate LiDAR data for perception and mapping.
+- Develop localization and autonomous navigation using appropriate ROS 2 packages.
+- Maintain reproducible build instructions and technical documentation.
+- Validate simulation and physical hardware behavior separately.
+
+## 📋 3. Robot Specifications
+
+| Parameter | Specification |
+|---|---|
+| Project name | VAYRON-AMR |
+| Robot category | Autonomous Mobile Robot |
 | Drive configuration | Four-wheel differential drive |
-| Drive grouping | Left and right wheel pairs |
-| Embedded controller | Arduino; exact board model to be documented |
-| Motor driver | Four-channel motor driver; exact model to be documented |
-| Robotics middleware | ROS 2 Humble |
+| Wheel arrangement | Two drive groups: left and right |
+| Embedded controller | Arduino; exact model to be confirmed |
+| Motor driver | Four-channel motor driver; exact model to be confirmed |
+| Motor configuration | Four DC geared motors, subject to hardware verification |
 | Operating system | Ubuntu 22.04 LTS |
+| Robotics middleware | ROS 2 Humble |
 | Robot description | URDF / Xacro |
-| Simulation | Gazebo Classic |
+| Simulator | Gazebo Classic |
 | Visualization | RViz2 |
-| Simulated LiDAR | Gazebo ray sensor integration |
-| Navigation framework | Nav2 planned for integration |
-| Mapping | SLAM integration planned / under development |
+| Simulated LiDAR | Gazebo ray-sensor integration configured |
+| Mapping | Planned / under development |
+| Localization | Planned / under development |
+| Autonomous navigation | Nav2 integration planned |
 
-> **Specification note:** Hardware model numbers, motor ratings, dimensions, battery specifications, and measured performance will be documented after they are verified. The presence of a package or configuration file does not mean that its complete functionality has been implemented or tested.
+Exact dimensions, motor ratings, battery specifications, communication interfaces, and measured performance will be documented after verification.
 
-## 04 — Hardware Components
+## 🔩 4. Hardware Components
 
-The table below documents the known hardware architecture. Exact product models and electrical specifications should be added after confirming the parts used in the physical robot.
+The following table describes the known hardware architecture. Model numbers, electrical ratings, and component prices must be added after identifying the exact parts used.
 
 | Component | Quantity | Purpose | Why it is used |
 |---|---:|---|---|
-| Arduino development board | 1 | Embedded motor-control logic | Receives control instructions and generates the signals needed to operate the motor driver. |
-| Four-channel motor driver | 1 | Motor power switching and direction control | Provides the motor-control channels required by the four-wheel arrangement, subject to the driver's supported wiring and current ratings. |
-| DC geared motors | 4 | Wheel propulsion | Convert electrical energy into rotational motion and provide torque for moving the robot. |
-| Robot wheels | 4 | Ground contact and locomotion | Provide traction and transfer motor torque to the ground. |
-| Robot chassis | 1 assembly | Mechanical structure | Supports the motors, wheels, controller, power system, and other components. |
-| Motor power source | To be confirmed | Supplies the drive system | Must meet the motor voltage and current requirements, including startup and stall current. |
-| Wiring and connectors | As required | Electrical interconnection | Connect the controller, motor driver, motors, and power distribution safely. |
-| LiDAR sensor | Physical model to be confirmed | Distance sensing and mapping | Intended to provide range measurements for perception and mapping. A simulated LiDAR is configured in the current Gazebo description. |
+| Arduino development board | 1 | Embedded control | Executes low-level motor-control logic and interfaces with the selected driver. |
+| Four-channel motor driver | 1 | Motor actuation | Provides the required motor-control channels, subject to the driver's actual capabilities and wiring. |
+| DC geared motors | 4 | Wheel propulsion | Generate the torque required to move the robot. |
+| Robot wheels | 4 | Locomotion | Transfer motor torque to the ground and provide traction. |
+| Chassis | 1 assembly | Mechanical structure | Supports motors, wheels, electronics, and other components. |
+| Motor power source | To be confirmed | Drive-system power | Supplies the voltage and current required by the motors. |
+| Voltage regulator / DC-DC converter | To be confirmed | Power regulation | Provides a suitable regulated supply when required by the electronics. |
+| Wiring and connectors | As required | Electrical integration | Connect the controller, motor driver, motors, and power system. |
+| LiDAR sensor | Model to be confirmed | Range sensing | Intended to provide range measurements for perception and mapping. |
 
-### How the Drive System Works
+### 4.1 Arduino Development Board
 
-The four wheels are controlled as two drive groups:
+**Role:** Low-level embedded control.
 
-- **Forward motion:** Both sides rotate in the direction required for forward travel.
-- **Reverse motion:** Both sides reverse direction.
-- **Left turn:** The right side moves faster than the left side, or the sides rotate in opposite directions for a tighter turn.
-- **Right turn:** The left side moves faster than the right side, or the sides rotate in opposite directions for a tighter turn.
-- **Rotation in place:** The two sides rotate in opposite directions, provided the motor control and mechanical arrangement support it.
+The Arduino is intended to execute motor-control logic and interface with the selected motor driver. The exact board model and its communication interface must be documented before finalizing firmware and wiring instructions.
 
-This is a differential-drive arrangement, not a mecanum-drive arrangement. Lateral movement without turning is not a native capability of this configuration.
+### 4.2 Four-Channel Motor Driver
 
-### Electrical Integration Considerations
+**Role:** Motor actuation.
 
-- Confirm the motor driver's rated voltage and continuous and peak current before connecting motors.
-- Use a suitable power supply for the motors and a correctly regulated supply for the Arduino.
-- Establish a common signal ground when required by the selected driver and controller interface.
+The motor driver switches motor power and controls the supported direction and speed signals. Its actual channel arrangement, voltage range, continuous current, and peak current must be verified against the selected motors.
+
+A four-channel driver does not automatically guarantee that four motors can be operated at the required current. Driver specifications and wiring matter.
+
+### 4.3 Four DC Geared Motors
+
+**Role:** Robot propulsion.
+
+Four motors provide the drive for the four wheels. The left and right sides are controlled as separate drive groups for differential-drive motion.
+
+If independent wheel control or encoder feedback is required, the electrical arrangement and firmware must support it.
+
+### 4.4 Wheels and Chassis
+
+**Role:** Mechanical support and locomotion.
+
+The wheels provide ground contact, while the chassis supports the motors and electronic components. Wheel diameter, wheelbase, track width, total mass, and ground clearance should be measured and recorded for accurate kinematic calculations.
+
+### 4.5 LiDAR Sensor
+
+**Role:** Range sensing and environmental perception.
+
+A simulated ray sensor is configured in the Gazebo robot description. The physical LiDAR model, interface, scan frequency, range limits, and actual sensor integration must be confirmed separately.
+
+### Electrical Integration and Safety
+
+- Verify the motor driver's voltage and current ratings before connecting the motors.
+- Check motor startup and stall current, not only nominal current.
 - Do not power motors directly from Arduino GPIO pins.
-- Verify polarity, wiring, fusing, and emergency-stop arrangements before physical testing.
+- Use a suitable regulated supply for the controller when required.
+- Establish a common signal reference where the selected interface requires it.
+- Confirm polarity, wiring, fusing, and emergency-stop behavior before physical tests.
+- Keep motor power and logic power within their respective specifications.
 
-## 05 — Software Stack
+## 💻 5. Software and Technologies
 
-| Technology | Role in VAYRON-AMR | Why it is used |
+| Technology | Role | Why it is used |
 |---|---|---|
 | Ubuntu 22.04 LTS | Operating system | Provides the target environment for ROS 2 Humble. |
-| ROS 2 Humble | Robotics middleware | Connects robot software through nodes, topics, services, and actions. |
-| URDF | Robot model description | Defines links, joints, and the robot's kinematic structure. |
-| Xacro | Robot description authoring | Allows reusable macros and parameters to organize the robot model. |
-| Gazebo Classic | Physics-based simulation | Enables development and testing without requiring the physical robot for every iteration. |
-| RViz2 | Robot visualization | Displays the robot model, TF frames, and supported sensor data. |
-| `robot_state_publisher` | Transform publication | Publishes robot link transforms from the URDF and joint states. |
-| `joint_state_publisher` | Joint-state support | Publishes configured joint states where appropriate for the model and workflow. |
-| `ros_gz` / Gazebo ROS integration | Simulation-to-ROS communication | Connects supported simulated sensors and robot systems to ROS topics. This project currently uses Gazebo Classic integration packages. |
-| Arduino firmware | Embedded motor control | Handles low-level motor commands and the hardware-specific interface. |
-| Nav2 | Navigation framework | Intended to provide path planning, navigation behaviors, and navigation orchestration. |
-| SLAM Toolbox | Mapping | Intended to build a map from supported laser scan and odometry inputs. |
+| ROS 2 Humble | Robotics middleware | Enables communication between nodes using topics, services, and actions. |
+| URDF | Robot description | Defines links, joints, and the robot's kinematic structure. |
+| Xacro | Robot model authoring | Supports reusable macros and parameters in robot descriptions. |
+| Gazebo Classic | Simulation | Enables testing of supported robot models and simulated sensors. |
+| RViz2 | Visualization | Displays robot models, TF frames, and supported sensor data. |
+| `robot_state_publisher` | TF publication | Publishes link transforms from the robot description and joint states. |
+| `joint_state_publisher` | Joint-state support | Publishes configured joint states where appropriate. |
+| Gazebo ROS plugins | Simulation integration | Connect supported simulated sensors and systems to ROS topics. |
+| Arduino firmware | Embedded control | Implements hardware-specific motor-control behavior. |
+| SLAM Toolbox | Mapping | Intended for LiDAR-based mapping integration. |
+| Nav2 | Autonomous navigation | Intended for path planning and navigation behaviors. |
 
-**Compatibility note:** This workspace uses Gazebo Classic integration. Modern Gazebo and Gazebo Classic have different integration stacks, so packages and plugins must match the installed simulator version.
+**Compatibility:** This project uses Gazebo Classic integration. Gazebo Classic and modern Gazebo use different integration stacks. Install plugins that match the simulator version installed on your system.
 
-## 06 — System Architecture
+## 🧠 6. System Architecture
 
-The intended system is divided into hardware control, robot modeling, perception, and navigation layers.
+The intended architecture separates high-level robotics software from embedded motor control.
 
-```text
-                 HIGH-LEVEL ROBOT SOFTWARE
-              ROS 2 Humble / Navigation Layer
-                           |
-                           v
-                    /cmd_vel commands
-                           |
-                           v
-               Embedded Control Interface
-                ROS 2 Node / Serial Link
-                           |
-                           v
-                      Arduino
-                           |
-                           v
-                 Four-Channel Motor Driver
-                           |
-              +------------+------------+
-              |            |            |
-           Left pair   Right pair   Motor power
-              |            |
-              +-----+------+
-                    |
-                    v
-             Four-Wheel AMR
-```
-
-The perception and simulation path is intended to follow this structure:
+### 6.1 Motion-Control Architecture
 
 ```text
-URDF / Xacro
-     |
-     v
-Robot State Publisher -----> TF transforms
-     |
-     +-----> RViz2
-     |
-     +-----> Gazebo Classic
-                  |
-                  v
-           Simulated LiDAR
-                  |
-                  v
-                /scan
-                  |
-                  v
-        Mapping / Localization
-                  |
-                  v
-              Nav2 (planned)
+                 ROS 2 HUMBLE
+                      |
+                      v
+              Velocity Commands
+                  /cmd_vel
+                      |
+                      v
+              Hardware Interface
+             Serial / USB (planned)
+                      |
+                      v
+                   Arduino
+                      |
+                      v
+            Four-Channel Motor Driver
+                      |
+             +--------+--------+
+             |                 |
+             v                 v
+       Left Wheel Pair   Right Wheel Pair
+             |                 |
+             +--------+--------+
+                      |
+                      v
+                  VAYRON-AMR
 ```
 
-> These diagrams describe the intended architecture. Hardware communication, closed-loop wheel control, odometry, SLAM, and Nav2 must each be verified independently before they are represented as operational features.
+The serial or USB link shown above represents the intended hardware interface. The actual protocol, node, and firmware implementation must be verified before this complete control chain can be considered operational.
 
-## 07 — Repository Structure
+### 6.2 Simulation and Perception Architecture
+
+```text
+                URDF / XACRO
+                     |
+                     v
+           Robot State Publisher
+                     |
+                     v
+                TF Frames
+                     |
+           +---------+---------+
+           |                   |
+           v                   v
+     Gazebo Classic          RViz2
+           |
+           v
+    Simulated LiDAR
+           |
+           v
+         /scan
+           |
+           v
+    Mapping / Localization
+           |
+           v
+      Nav2 (planned)
+```
+
+### 6.3 Coordinate Frames
+
+A typical mobile robot may use the following coordinate frames, depending on the actual robot description and navigation configuration:
+
+| Frame | Purpose |
+|---|---|
+| `map` | Global map reference for navigation |
+| `odom` | Locally continuous odometry reference |
+| `base_link` | Robot body reference frame |
+| `base_footprint` | Optional planar projection of the robot base |
+| `laser_frame` | LiDAR sensor reference frame |
+
+These are conventional frame names, not a guarantee that every frame is currently present in VAYRON's TF tree. The actual URDF and runtime transforms determine which frames are available.
+
+## 🛞 7. Robot Drive Mechanism
+
+VAYRON-AMR uses a **four-wheel differential-drive configuration**, not mecanum drive.
+
+The left wheels form one drive group and the right wheels form the other. Changing the relative speed or direction of these groups produces the robot's motion.
+
+| Motion | Drive behavior |
+|---|---|
+| Forward | Both sides move in the forward direction. |
+| Reverse | Both sides move in reverse. |
+| Turn left | Right side moves faster than the left side, or the sides counter-rotate for a tighter turn. |
+| Turn right | Left side moves faster than the right side, or the sides counter-rotate for a tighter turn. |
+| Rotate in place | Left and right sides rotate in opposite directions, if supported by the mechanical and control setup. |
+
+The exact wheel-speed commands depend on motor wiring, wheel orientation, wheel geometry, and the selected controller implementation.
+
+### Important Kinematic Parameters
+
+For a differential-drive model, the following measurements are important:
+
+- Wheel radius.
+- Distance between the left and right drive groups.
+- Wheel and motor orientation.
+- Wheel encoder resolution, if encoders are installed.
+- Wheel-speed limits.
+- Robot footprint and collision geometry.
+
+These values should be measured from the physical robot or validated CAD model before configuring an accurate controller.
+
+## 🗂️ 8. ROS 2 Workspace Structure
+
+The repository follows a modular package structure.
 
 ```text
 VAYRON-AMR/
-├── .gitignore
 ├── README.md
+├── .gitignore
 ├── docs/
 │   └── images/
+│       └── vayron-banner.png
 └── src/
     ├── vayron_description/
     │   ├── launch/
@@ -213,79 +338,93 @@ VAYRON-AMR/
 
 | Package | Responsibility |
 |---|---|
-| `vayron_description` | Robot links, joints, Xacro/URDF files, visualization configuration, and description launch files. |
-| `vayron_bringup` | Intended entry point for starting the complete robot system. |
-| `vayron_control` | Intended location for motion-control nodes and drive-control logic. |
+| `vayron_description` | Robot links, joints, URDF/Xacro, description launch files, and RViz configuration. |
+| `vayron_bringup` | Intended entry point for launching the complete robot system. |
+| `vayron_control` | Intended location for motion-control nodes and differential-drive logic. |
 | `vayron_hardware` | Intended location for Arduino communication and hardware interfaces. |
-| `vayron_navigation` | Intended location for mapping, localization, navigation parameters, and related launch files. |
+| `vayron_navigation` | Intended location for mapping, localization, Nav2 configuration, and related launch files. |
 | `vayron_simulation` | Intended location for simulation-specific assets and launch configuration. |
 
-Some packages currently contain ROS 2 package scaffolding only. Their responsibilities describe the planned modular design, not necessarily completed functionality.
+Some packages currently contain ROS 2 package scaffolding only. The table documents their intended responsibilities, not a claim that their complete functionality is already implemented.
 
-## 08 — Installation
+## 🛠️ 9. Installation and Setup
 
-### Prerequisites
+### 9.1 Prerequisites
 
-- Ubuntu 22.04 LTS
-- ROS 2 Humble
-- Gazebo Classic and compatible ROS integration packages
-- Git
-- `colcon`
-- `rosdep`
+- Ubuntu 22.04 LTS.
+- ROS 2 Humble.
+- Gazebo Classic and compatible ROS integration packages.
+- Git.
+- `colcon`.
+- `rosdep`.
 
-Install the build tools if they are not already available:
+### 9.2 Install Build Tools
 
 ```bash
 sudo apt update
+
 sudo apt install -y \
   git \
   python3-colcon-common-extensions \
   python3-rosdep
 ```
 
-Install the ROS 2 Humble Gazebo Classic integration package if it is available for your configured ROS installation:
+If `rosdep` has not been initialized on the system, follow the official ROS 2 setup documentation before resolving dependencies.
 
-```bash
-sudo apt install ros-humble-gazebo-ros
-```
-
-### Clone the Repository
+### 9.3 Clone the Repository
 
 ```bash
 git clone https://github.com/shivamsb22/VAYRON-AMR.git
+
 cd VAYRON-AMR
 ```
 
-### Resolve Dependencies
+The repository directory is named `VAYRON-AMR`. If your existing local workspace is named `vayron_ws`, continue using that directory for local development. The local folder name does not need to match the GitHub repository name.
+
+### 9.4 Source ROS 2
 
 ```bash
 source /opt/ros/humble/setup.bash
-
-rosdep update
-rosdep install --from-paths src --ignore-src -r -y
 ```
 
-If `rosdep` reports missing dependency declarations, resolve those before proceeding.
+### 9.5 Install Package Dependencies
 
-### Build the Workspace
+From the workspace root:
 
 ```bash
-cd ~/VAYRON-AMR
+rosdep update
+
+rosdep install \
+  --from-paths src \
+  --ignore-src \
+  -r -y
+```
+
+If dependency resolution reports missing keys, inspect the relevant package manifests and install the correct dependencies before continuing.
+
+### 9.6 Build the Workspace
+
+```bash
+cd ~/vayron_ws
 
 source /opt/ros/humble/setup.bash
+
 colcon build
+
 source install/setup.bash
 ```
 
-> If your local workspace is named `vayron_ws`, use `cd ~/vayron_ws` instead. The GitHub repository name and local directory name do not have to match.
+If the workspace has been cloned into a different directory, substitute that directory for `~/vayron_ws`.
 
-## 09 — Launching the Robot Description
+## 🚀 10. Build and Launch
+
+### 10.1 Launch the Robot Description and Simulation
 
 The current description launch file is:
 
 `vayron_description/launch/vayron.launch.py`
 
-Launch the robot using:
+Run:
 
 ```bash
 source /opt/ros/humble/setup.bash
@@ -294,13 +433,11 @@ source ~/vayron_ws/install/setup.bash
 ros2 launch vayron_description vayron.launch.py
 ```
 
-The launch configuration is intended to start the robot description and visualization/simulation components configured in the package.
+This launches the components configured in the launch file. Exact behavior depends on the installed packages, available Gazebo plugins, and the current launch configuration.
 
-Exact launch behavior depends on the current launch file, installed plugins, and local environment.
+### 10.2 Inspect ROS 2 Topics
 
-### Verify ROS 2 Topics
-
-In another terminal:
+Open another terminal and run:
 
 ```bash
 source /opt/ros/humble/setup.bash
@@ -309,103 +446,126 @@ source ~/vayron_ws/install/setup.bash
 ros2 topic list
 ```
 
-Check the simulated laser scan topic:
+To inspect simulated LiDAR messages, if the topic is active:
 
 ```bash
 ros2 topic echo /scan
 ```
 
-Check available transforms:
+To inspect available TF frames:
 
 ```bash
 ros2 run tf2_tools view_frames
 ```
 
-These commands help verify whether the corresponding topics and transforms are actually being published.
+### 10.3 Inspect Running Nodes
 
-## 10 — Development Roadmap
+```bash
+ros2 node list
+```
+
+### 10.4 Important Motion-Control Note
+
+Launching the robot model does not automatically make it drivable. Working motion control requires an appropriate controller or simulation drive plugin. Physical operation additionally requires a functioning hardware interface and compatible Arduino firmware.
+
+Keyboard teleoperation should only be documented as operational after the relevant command path and robot response have been tested.
+
+## 🧪 11. Verification and Testing
+
+Validate each subsystem independently.
+
+| Test | What to verify |
+|---|---|
+| Build | All required packages compile successfully. |
+| Robot description | URDF/Xacro loads and the robot model is valid. |
+| TF | Expected frames are connected and correctly oriented. |
+| RViz2 | The correct Fixed Frame is selected and the model is visible. |
+| Gazebo | The robot spawns and the configured simulation plugins load. |
+| LiDAR | The expected scan topic publishes valid range measurements. |
+| Motion control | Velocity commands produce the expected simulated or physical movement. |
+| Hardware interface | Communication with the Arduino is reliable. |
+| Mapping | SLAM produces a usable map from the supported sensor and motion inputs. |
+| Navigation | Localization, planning, and navigation behaviors work together. |
+
+Record test results, software versions, configuration changes, and known limitations as the project develops.
+
+## 🗺️ 12. Development Roadmap
+
+The checkboxes below distinguish initial setup work from features that still require implementation or validation.
 
 ### Robot Modeling and Simulation
 
-- [x] ROS 2 workspace initialized
-- [x] Modular package structure created
-- [x] Initial URDF/Xacro robot model created
-- [x] Gazebo/RViz launch integration created
-- [x] Simulated LiDAR integration configured
-- [ ] Validate all link and joint transforms
-- [ ] Validate the robot model and sensor positions in simulation
+- [x] Initialize the ROS 2 workspace.
+- [x] Create the modular package structure.
+- [x] Create the initial URDF/Xacro robot model.
+- [x] Create the initial Gazebo/RViz launch integration.
+- [x] Configure the simulated LiDAR integration.
+- [ ] Validate all link and joint transforms.
+- [ ] Validate the complete robot model and sensor alignment.
 
-### Motion Control
+### Embedded and Motion Control
 
-- [ ] Implement and verify the differential-drive controller
-- [ ] Establish the ROS 2 to Arduino communication protocol
-- [ ] Implement motor direction and speed control
-- [ ] Validate safe stopping and command timeouts
-- [ ] Integrate wheel encoders and odometry if supported by the hardware
-- [ ] Verify keyboard teleoperation in simulation
+- [ ] Confirm Arduino board and motor-driver models.
+- [ ] Implement and validate differential-drive control.
+- [ ] Establish the ROS 2 to Arduino communication interface.
+- [ ] Implement motor direction and speed commands.
+- [ ] Add safe-stop and command-timeout behavior.
+- [ ] Integrate encoder feedback and odometry, if supported by the hardware.
+- [ ] Validate keyboard teleoperation.
 
 ### Perception and Navigation
 
-- [ ] Validate `/scan` data and sensor frame alignment
-- [ ] Integrate and validate SLAM Toolbox
-- [ ] Configure localization and map loading
-- [ ] Integrate Nav2
-- [ ] Test goal navigation and obstacle avoidance
-- [ ] Validate the complete workflow on physical hardware
+- [ ] Validate LiDAR topic data and frame alignment.
+- [ ] Integrate SLAM Toolbox.
+- [ ] Configure localization and map loading.
+- [ ] Integrate Nav2.
+- [ ] Validate path planning and obstacle avoidance.
+- [ ] Test the complete workflow on physical hardware.
 
-## 11 — Troubleshooting
+## 🔧 13. Troubleshooting
 
-| Problem | Checks |
+| Issue | Checks and possible solution |
 |---|---|
-| Package not found | Source `/opt/ros/humble/setup.bash`, rebuild with `colcon build`, and source the workspace's `install/setup.bash`. |
-| Robot model not visible | Check the URDF/Xacro, robot description topic, Fixed Frame, and TF tree. |
-| LiDAR data missing | Check the Gazebo sensor plugin, sensor topic, frame ID, and `ros2 topic echo /scan`. |
-| Gazebo plugin fails to load | Confirm the plugin library is installed and compatible with Gazebo Classic. |
-| Robot does not move | Verify the drive plugin or controller, `/cmd_vel` subscriber, motor-control implementation, and hardware communication. |
-| RViz displays transform errors | Confirm the Fixed Frame exists and the required TF transforms are being published. |
-| Build fails | Read the first actual compiler or dependency error, fix it, and rebuild the affected package. |
+| Package not found | Source ROS 2 and the workspace's `install/setup.bash`; rebuild if necessary. |
+| Build fails | Inspect the first actual compiler or dependency error and resolve it before rebuilding. |
+| Robot model missing | Check the URDF/Xacro, robot description, and launch configuration. |
+| TF errors in RViz2 | Check the Fixed Frame and verify that the required transforms are being published. |
+| LiDAR topic missing | Check the sensor plugin, topic name, sensor frame, and Gazebo logs. |
+| Gazebo plugin fails | Confirm the plugin is installed and matches the Gazebo Classic environment. |
+| Robot does not move | Check whether a drive controller/plugin is configured, `/cmd_vel` is received, and the relevant motion-control implementation is active. |
+| Hardware does not respond | Verify power, wiring, driver ratings, Arduino firmware, and the selected communication interface. |
+| Navigation fails | Verify map availability, sensor data, transforms, odometry, localization, and navigation parameters. |
 
-## 12 — Engineering Principles
+## 🧭 14. Engineering Principles
 
-VAYRON-AMR follows a modular development approach:
+**Modularity:** Keep robot description, control, hardware, simulation, and navigation concerns separate.
 
-- **Simulation first:** validate software behavior before physical integration.
-- **Modularity:** keep robot description, control, hardware, and navigation concerns separate.
-- **Verifiability:** distinguish implemented features from planned features.
-- **Safety:** validate electrical ratings, motor behavior, and stopping mechanisms before operation.
-- **Documentation:** keep setup steps, component specifications, and testing results reproducible.
+**Simulation first:** Validate software behavior in a virtual environment before physical integration wherever practical.
 
-## 13 — Screenshots and Demonstrations
+**Verifiability:** Document completed, planned, and experimentally validated features separately.
 
-Robot screenshots, Gazebo views, RViz visualizations, architecture diagrams, and demonstration videos will be added as they become available.
+**Electrical safety:** Respect component ratings and verify power and stopping behavior before testing.
 
-Suggested documentation assets:
+**Reproducibility:** Keep setup instructions, dependency declarations, and configuration files version-controlled.
 
-```text
-docs/
-└── images/
-    ├── vayron-overview.png
-    ├── gazebo-simulation.png
-    ├── rviz-visualization.png
-    └── system-architecture.png
-```
+**Continuous improvement:** Use test results and observed failures to guide the next engineering iteration.
 
-These are suggested filenames only. Add each image before referencing it in the README.
+## 🤝 15. Contributing
 
-## 14 — Contributing
-
-Contributions and technical feedback are welcome.
+Technical feedback and contributions are welcome.
 
 1. Fork the repository.
 2. Create a feature branch.
 3. Make a focused change.
 4. Build and test the affected packages.
-5. Document the implementation and verification steps.
-6. Submit a pull request with a clear description.
+5. Update documentation where necessary.
+6. Open a pull request describing the change and its verification.
 
-## 15 — License
+For bugs or feature requests, use the [GitHub Issues page](https://github.com/shivamsb22/VAYRON-AMR/issues).
 
-A license has not yet been selected. Until a license is added, permission to reuse, modify, or redistribute this project should not be assumed.
+## 📄 16. License
+
+No license has been selected for this repository yet. Until a license is added, permission to reuse, modify, or redistribute the project should not be assumed.
 
 ---
 
@@ -413,10 +573,10 @@ A license has not yet been selected. Until a license is added, permission to reu
 
 ### VAYRON-AMR
 
-**DESIGN. BUILD. SIMULATE. VALIDATE.**
+**DESIGN. SIMULATE. INTEGRATE. NAVIGATE.**
 
 *Engineering autonomy, one subsystem at a time.*
 
-[Repository](https://github.com/shivamsb22/VAYRON-AMR) · [Issues](https://github.com/shivamsb22/VAYRON-AMR/issues)
+[Repository](https://github.com/shivamsb22/VAYRON-AMR) · [Issues](https://github.com/shivamsb22/VAYRON-AMR/issues) · [ROS 2 Humble](https://docs.ros.org/en/humble/)
 
 </div>
