@@ -1,0 +1,380 @@
+<?xml version="1.0"?>
+<robot name="vayron" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="chassis_length" value="0.22"/>
+  <xacro:property name="chassis_width" value="0.22"/>
+  <xacro:property name="chassis_thickness" value="0.003"/>
+  <xacro:property name="wheel_radius" value="0.0325"/>
+  <xacro:property name="wheel_width" value="0.025"/>
+  <xacro:property name="wheel_x" value="0.070"/>
+  <xacro:property name="wheel_y" value="0.095"/>
+  <xacro:property name="wheel_z" value="-0.035"/>
+
+  <material name="mat_white">
+    <color rgba="0.88 0.90 0.92 1"/>
+  </material>
+  <material name="mat_black">
+    <color rgba="0.035 0.045 0.060 1"/>
+  </material>
+  <material name="mat_rubber">
+    <color rgba="0.10 0.11 0.12 1"/>
+  </material>
+  <material name="mat_amber">
+    <color rgba="1.0 0.32 0.025 1"/>
+  </material>
+  <material name="mat_metal">
+    <color rgba="0.55 0.58 0.62 1"/>
+  </material>
+
+  <!-- Main reference frame -->
+  <link name="base_footprint"/>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_thickness}"/>
+      </geometry>
+      <material name="mat_black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_thickness}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.5"/>
+      <inertia ixx="0.012" ixy="0" ixz="0"
+               iyy="0.012" iyz="0" izz="0.012"/>
+    </inertial>
+  </link>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.0675" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Four conventional wheels -->
+  <xacro:macro name="wheel" params="name x y side">
+    <link name="${name}">
+      <visual>
+        <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+        <material name="mat_rubber"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.20"/>
+        <inertia ixx="0.00015" ixy="0" ixz="0"
+                 iyy="0.00015" iyz="0" izz="0.00015"/>
+      </inertial>
+    </link>
+
+    <joint name="${name}_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${name}"/>
+      <origin xyz="${x} ${y} ${wheel_z}" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="5.0" velocity="20.0"/>
+      <dynamics damping="0.1" friction="0.1"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:wheel name="front_left_wheel"  x="${wheel_x}"  y="${wheel_y}"  side="left"/>
+  <xacro:wheel name="rear_left_wheel"   x="${-wheel_x}" y="${wheel_y}"  side="left"/>
+  <xacro:wheel name="front_right_wheel" x="${wheel_x}"  y="${-wheel_y}" side="right"/>
+  <xacro:wheel name="rear_right_wheel"  x="${-wheel_x}" y="${-wheel_y}" side="right"/>
+
+  <!-- Electronics tray -->
+  <link name="electronics_tray">
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.19 0.19 0.002"/>
+      </geometry>
+      <material name="mat_metal"/>
+    </visual>
+  </link>
+  <joint name="electronics_tray_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="electronics_tray"/>
+    <origin xyz="0 0 0.035" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Raspberry Pi board -->
+  <link name="raspberry_pi_link">
+    <visual>
+      <geometry>
+        <box size="0.085 0.056 0.002"/>
+      </geometry>
+      <material name="mat_black"/>
+    </visual>
+  </link>
+  <joint name="raspberry_pi_joint" type="fixed">
+    <parent link="electronics_tray"/>
+    <child link="raspberry_pi_link"/>
+    <origin xyz="-0.035 0 0.012" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Raspberry Pi cooling fan -->
+  <link name="pi_fan_link">
+    <visual>
+      <geometry>
+        <box size="0.030 0.030 0.008"/>
+      </geometry>
+      <material name="mat_black"/>
+    </visual>
+  </link>
+  <joint name="pi_fan_joint" type="fixed">
+    <parent link="raspberry_pi_link"/>
+    <child link="pi_fan_link"/>
+    <origin xyz="0 0 0.006" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Arduino Mega -->
+  <link name="arduino_mega_link">
+    <visual>
+      <geometry>
+        <box size="0.102 0.053 0.002"/>
+      </geometry>
+      <material name="mat_black"/>
+    </visual>
+  </link>
+  <joint name="arduino_mega_joint" type="fixed">
+    <parent link="electronics_tray"/>
+    <child link="arduino_mega_link"/>
+    <origin xyz="0.040 0 0.012" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Integrated angular upper body -->
+  <link name="upper_shell">
+    <!-- Main body -->
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry><box size="0.155 0.17 0.045"/></geometry>
+      <material name="mat_white"/>
+    </visual>
+
+    <!-- Black top deck -->
+    <visual>
+      <origin xyz="0 0 0.025"/>
+      <geometry><box size="0.175 0.18 0.006"/></geometry>
+      <material name="mat_black"/>
+    </visual>
+
+    <!-- Slanted left and right side armor -->
+    <visual>
+      <origin xyz="0 0.079 -0.002" rpy="0 0.12 0"/>
+      <geometry><box size="0.135 0.012 0.040"/></geometry>
+      <material name="mat_white"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.079 -0.002" rpy="0 -0.12 0"/>
+      <geometry><box size="0.135 0.012 0.040"/></geometry>
+      <material name="mat_white"/>
+    </visual>
+
+    <!-- Front dark sensor fascia -->
+    <visual>
+      <origin xyz="0.079 0 -0.002" rpy="0 0.12 0"/>
+      <geometry><box size="0.012 0.132 0.030"/></geometry>
+      <material name="mat_black"/>
+    </visual>
+
+    <!-- Rear dark service panel -->
+    <visual>
+      <origin xyz="-0.079 0 -0.002"/>
+      <geometry><box size="0.010 0.12 0.028"/></geometry>
+      <material name="mat_black"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0"/>
+      <geometry><box size="0.155 0.17 0.045"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.45"/>
+      <inertia ixx="0.0012" ixy="0" ixz="0"
+               iyy="0.0012" iyz="0" izz="0.0012"/>
+    </inertial>
+  </link>
+
+  <joint name="upper_shell_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="upper_shell"/>
+    <origin xyz="0 0 0.055" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Amber front light strip -->
+  <link name="front_amber_panel">
+    <visual>
+      <geometry><box size="0.003 0.085 0.004"/></geometry>
+      <material name="mat_amber"/>
+    </visual>
+  </link>
+  <joint name="front_amber_panel_joint" type="fixed">
+    <parent link="upper_shell"/>
+    <child link="front_amber_panel"/>
+    <origin xyz="0.086 0 -0.009" rpy="0 0 0"/>
+  </joint>
+
+  <!-- LiDAR mounting post and scanner -->
+  <link name="lidar_mount">
+    <visual>
+      <geometry>
+        <cylinder radius="0.012" length="0.018"/>
+      </geometry>
+      <material name="mat_metal"/>
+    </visual>
+  </link>
+  <joint name="lidar_mount_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_mount"/>
+    <origin xyz="0 0 0.113" rpy="0 0 0"/>
+  </joint>
+
+  <link name="rplidar_link">
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.048" length="0.055"/>
+      </geometry>
+      <material name="mat_black"/>
+    </visual>
+  </link>
+  <joint name="rplidar_joint" type="fixed">
+    <parent link="lidar_mount"/>
+    <child link="rplidar_link"/>
+    <origin xyz="0 0 0.0365" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Front camera -->
+  <link name="camera_link">
+    <visual>
+      <geometry>
+        <box size="0.025 0.035 0.020"/>
+      </geometry>
+      <material name="mat_black"/>
+    </visual>
+  </link>
+  <joint name="camera_joint" type="fixed">
+    <parent link="upper_shell"/>
+    <child link="camera_link"/>
+    <origin xyz="0.087 0 0.006" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_optical_frame"/>
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_optical_frame"/>
+    <origin xyz="0 0 0" rpy="-1.5707963 0 -1.5707963"/>
+  </joint>
+
+  <!-- Two front ultrasonic sensor housings -->
+  <xacro:macro name="ultrasonic" params="name y">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <cylinder radius="0.010" length="0.012"/>
+        </geometry>
+        <material name="mat_metal"/>
+      </visual>
+    </link>
+    <joint name="${name}_joint" type="fixed">
+      <parent link="upper_shell"/>
+      <child link="${name}"/>
+      <origin xyz="0.088 ${y} -0.008" rpy="0 1.5707963 0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:ultrasonic name="ultrasonic_left_link" y="0.050"/>
+  <xacro:ultrasonic name="ultrasonic_right_link" y="-0.050"/>
+
+
+  <!-- Gazebo Classic simulated 360-degree LiDAR -->
+  <gazebo reference="rplidar_link">
+    <sensor name="vayron_lidar" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <always_on>true</always_on>
+      <update_rate>10</update_rate>
+
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159265</min_angle>
+            <max_angle>3.14159265</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>1</samples>
+            <resolution>1</resolution>
+            <min_angle>0</min_angle>
+            <max_angle>0</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.15</min>
+          <max>12.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+
+      <plugin name="vayron_lidar_ros" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/out:=/scan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>rplidar_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+
+  <!-- VAYRON differential drive controller for Gazebo Classic -->
+  <gazebo>
+    <plugin name="vayron_diff_drive"
+            filename="libgazebo_ros_diff_drive.so">
+
+      <ros>
+        <namespace>/</namespace>
+        <remapping>cmd_vel:=/cmd_vel</remapping>
+        <remapping>odom:=/odom</remapping>
+      </ros>
+
+      <update_rate>50</update_rate>
+
+      <!-- Keep each left/right pair adjacent for Gazebo Classic -->
+      <left_joint>front_left_wheel_joint</left_joint>
+      <right_joint>front_right_wheel_joint</right_joint>
+      <left_joint>rear_left_wheel_joint</left_joint>
+      <right_joint>rear_right_wheel_joint</right_joint>
+
+
+      <wheel_separation>0.19</wheel_separation>
+      <wheel_diameter>0.065</wheel_diameter>
+
+      <max_wheel_torque>5.0</max_wheel_torque>
+      <max_wheel_acceleration>2.0</max_wheel_acceleration>
+
+      <command_topic>cmd_vel</command_topic>
+      <odometry_topic>odom</odometry_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_footprint</robot_base_frame>
+
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>false</publish_wheel_tf>
+
+    </plugin>
+  </gazebo>
+</robot>

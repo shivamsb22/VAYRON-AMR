@@ -33,13 +33,6 @@ def generate_launch_description():
         }]
     )
 
-    joint_publisher = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        name='joint_state_publisher',
-        output='screen',
-        parameters=[{'use_sim_time': True}]
-    )
 
     gazebo = ExecuteProcess(
         cmd=[
@@ -77,7 +70,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         state_publisher,
-        joint_publisher,
         gazebo,
         rviz,
         TimerAction(
