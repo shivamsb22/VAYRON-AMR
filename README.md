@@ -319,8 +319,13 @@ The exact topics and available tools can vary with the launch configuration. If 
 
 <br>
 
-[![GitHub Repository](https://img.shields.io/badge/GitHub-VAYRON--AMR-00D9FF?style=for-the-badge&logo=github&logoColor=111827)](https://github.com/shivamsb22/VAYRON-AMR)
-[![LinkedIn Search](https://img.shields.io/badge/LinkedIn-Find%20Jerry-1677FF?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/search/results/people/?keywords=Shivam%20Singh%20Bais)
+<a href="https://github.com/shivamsb22">
+  <img src="https://img.shields.io/badge/GitHub-My%20Profile-00D9FF?style=for-the-badge&logo=github&logoColor=111827" alt="Jerry's GitHub Profile">
+</a>
+
+<a href="YOUR_LINKEDIN_PROFILE_URL">
+  <img src="https://img.shields.io/badge/LinkedIn-My%20Profile-1677FF?style=for-the-badge&logo=linkedin&logoColor=white" alt="Jerry's LinkedIn Profile">
+</a>
 
 <br>
 
