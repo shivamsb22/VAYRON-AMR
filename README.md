@@ -323,8 +323,8 @@ The exact topics and available tools can vary with the launch configuration. If 
   <img src="https://img.shields.io/badge/GitHub-My%20Profile-00D9FF?style=for-the-badge&logo=github&logoColor=111827" alt="Jerry's GitHub Profile">
 </a>
 
-<a href="YOUR_LINKEDIN_PROFILE_URL">
-  <img src="https://img.shields.io/badge/LinkedIn-My%20Profile-1677FF?style=for-the-badge&logo=linkedin&logoColor=white" alt="Jerry's LinkedIn Profile">
+<a href="https://www.linkedin.com/in/shivam-singh-bais-76709a228">
+  <img src="https://img.shields.io/badge/LinkedIn-My%20Profile-1677FF?style=for-the-badge&logo=linkedin&logoColor=white" alt="Shivam Singh Bais LinkedIn Profile">
 </a>
 
 <br>
