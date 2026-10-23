@@ -175,6 +175,8 @@ Visualization Manager:
           Value: true
         lidar_mount:
           Value: true
+        odom:
+          Value: true
         pi_fan_link:
           Value: true
         raspberry_pi_link:
@@ -226,6 +228,8 @@ Visualization Manager:
                 {}
               ultrasonic_right_link:
                 {}
+        odom:
+          {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -265,7 +269,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 38; 38; 38
-    Fixed Frame: base_footprint
+    Fixed Frame: odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -308,7 +312,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 2.4731802940368652
+      Distance: 4.358589172363281
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -323,10 +327,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5103984475135803
+      Pitch: 0.4003986120223999
       Target Frame: base_link
       Value: Orbit (rviz_default_plugins)
-      Yaw: 0.8654105067253113
+      Yaw: 0.11541067808866501
     Saved: ~
 Window Geometry:
   Displays:
