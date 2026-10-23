@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/images/vayron-banner.png" alt="VAYRON-AMR | Autonomous Mobile Robotics Platform" width="100%">
+<img src="docs/images/vayron-header-banner.png" alt="VAYRON-AMR | Autonomous Mobile Robotics Platform" width="100%">
 
 <br>
 
