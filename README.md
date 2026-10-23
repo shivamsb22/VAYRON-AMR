@@ -569,14 +569,31 @@ No license has been selected for this repository yet. Until a license is added, 
 
 ---
 
+
 <div align="center">
 
-### VAYRON-AMR
+# VAYRON-AMR
 
-**DESIGN. SIMULATE. INTEGRATE. NAVIGATE.**
+*Engineered with curiosity. Built for autonomy.*
 
-*Engineering autonomy, one subsystem at a time.*
+**Robotics & Automation Engineer**
 
-[Repository](https://github.com/shivamsb22/VAYRON-AMR) · [Issues](https://github.com/shivamsb22/VAYRON-AMR/issues) · [ROS 2 Humble](https://docs.ros.org/en/humble/)
+<br>
+
+<a href="https://github.com/shivamsb22/VAYRON-AMR">
+  <img src="https://img.shields.io/badge/GitHub-VAYRON--AMR-00D9FF?style=for-the-badge&logo=github&logoColor=black" alt="VAYRON-AMR GitHub Repository">
+</a>
+&nbsp;
+<a href="YOUR_LINKEDIN_PROFILE_URL">
+  <img src="https://img.shields.io/badge/LinkedIn-Connect-1677FF?style=for-the-badge&logo=linkedin&logoColor=white" alt="Connect on LinkedIn">
+</a>
+
+<br><br>
+
+<sub>Designed and developed by</sub>
+
+<h3><em>Jerry</em></h3>
+
+<sub>VAYRON-AMR · Autonomous Mobile Robotics</sub>
 
 </div>
