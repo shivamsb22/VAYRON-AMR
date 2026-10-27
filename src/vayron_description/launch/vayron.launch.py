@@ -33,7 +33,18 @@ def generate_launch_description():
         }]
     )
 
-
+    watchdog = Node(
+        package='vayron_description',
+        executable='cmd_vel_watchdog.py',
+        name='cmd_vel_watchdog',
+        output='screen',
+        parameters=[{
+            'timeout_sec': 0.5,
+            'publish_rate': 20.0
+        }],
+        respawn=True,
+        respawn_delay=0.2
+    )
     gazebo = ExecuteProcess(
         cmd=[
             'gazebo',
@@ -70,6 +81,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         state_publisher,
+        watchdog,
         gazebo,
         rviz,
         TimerAction(

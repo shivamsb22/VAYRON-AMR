@@ -347,7 +347,7 @@
 
       <ros>
         <namespace>/</namespace>
-        <remapping>cmd_vel:=/cmd_vel</remapping>
+        <remapping>cmd_vel:=/cmd_vel_safe</remapping>
         <remapping>odom:=/odom</remapping>
       </ros>
 
