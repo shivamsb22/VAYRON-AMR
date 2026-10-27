@@ -71,8 +71,19 @@ class CmdVelWatchdog(Node):
             self.publisher.publish(Twist())
             return
 
-        self.publisher.publish(self.last_command)
+        safe_command = Twist()
 
+        # Limit forward/reverse speed
+        safe_command.linear.x = max(
+            -0.10, min(0.10, self.last_command.linear.x)
+        )
+
+        # Limit turning speed
+        safe_command.angular.z = max(
+            -0.30, min(0.30, self.last_command.angular.z)
+        )
+
+        self.publisher.publish(safe_command)
 
 def main(args=None):
     rclpy.init(args=args)
