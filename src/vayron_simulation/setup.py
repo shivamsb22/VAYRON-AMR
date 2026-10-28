@@ -13,7 +13,7 @@ setup(
          ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         (os.path.join('share', package_name, 'worlds'),
-         glob('worlds/*.world')),
+         glob('worlds/*.world') + glob('worlds/**/*.world', recursive=True)),
         (os.path.join('share', package_name, 'launch'),
          glob('launch/*.launch.py')),
     ],
