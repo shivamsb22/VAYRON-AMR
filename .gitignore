@@ -1,28 +1,9 @@
-# ROS 2 generated files
-/build/
-/install/
-/log/
-
-# Python
-__pycache__/
-*.py[cod]
-*.egg-info/
-.pytest_cache/
-
-# IDE and OS
+build/
+install/
+log/
+**/__pycache__/
+*.pyc
 .vscode/
 .idea/
 .DS_Store
-Thumbs.db
-
-# Secrets
-.env
-.env.*
-!.env.example
-
-# ROS logs and temporary files
-*.log
-
-# Temporary backups
 *.backup
-*~

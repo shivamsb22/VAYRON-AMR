@@ -75,12 +75,12 @@ class CmdVelWatchdog(Node):
 
         # Limit forward/reverse speed
         safe_command.linear.x = max(
-            -0.10, min(0.10, self.last_command.linear.x)
+            -0.30, min(0.30, self.last_command.linear.x)
         )
 
         # Limit turning speed
         safe_command.angular.z = max(
-            -0.30, min(0.30, self.last_command.angular.z)
+            -0.60, min(0.60, self.last_command.angular.z)
         )
 
         self.publisher.publish(safe_command)
