@@ -2,10 +2,20 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>vayron_navigation</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="yourrjerry@gmail.com">jerry</maintainer>
-  <license>TODO: License declaration</license>
+  <version>0.1.0</version>
+  <description>SLAM Toolbox and Nav2 configuration for VAYRON AMR navigation.</description>
+  <maintainer email="yourrjerry@gmail.com">Jerry</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>slam_toolbox</exec_depend>
+  <exec_depend>nav2_bringup</exec_depend>
+  <exec_depend>nav2_map_server</exec_depend>
+  <exec_depend>nav2_amcl</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
