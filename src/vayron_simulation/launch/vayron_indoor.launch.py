@@ -12,25 +12,32 @@ from launch_ros.parameter_descriptions import ParameterValue
 def generate_launch_description():
     description_dir = get_package_share_directory('vayron_description')
     simulation_dir = get_package_share_directory('vayron_simulation')
+    control_dir = get_package_share_directory('vayron_control')
 
     xacro_file = os.path.join(
         description_dir, 'urdf', 'vayron', 'vayron.urdf.xacro'
     )
     world_file = os.path.join(
-        simulation_dir,
-        'worlds',
-        'indoor_test_facility.world'
+        simulation_dir, 'worlds', 'indoor_test_facility.world'
     )
     rviz_file = os.path.join(description_dir, 'rviz', 'vayron.rviz')
+    control_config = os.path.join(control_dir, 'config', 'control.yaml')
 
     robot_description = ParameterValue(
-        Command([FindExecutable(name='xacro'), ' ', xacro_file]),
+        Command([
+            FindExecutable(name='xacro'),
+            ' ',
+            xacro_file,
+            ' ',
+            'simulation:=true',
+        ]),
         value_type=str,
     )
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
+        name='robot_state_publisher',
         parameters=[{
             'robot_description': robot_description,
             'use_sim_time': True,
@@ -39,19 +46,17 @@ def generate_launch_description():
     )
 
     watchdog = Node(
-        package='vayron_description',
-        executable='cmd_vel_watchdog.py',
-        name='cmd_vel_watchdog',
-        parameters=[{
-            'timeout_sec': 0.5,
-            'publish_rate': 20.0,
-        }],
+        package='vayron_control',
+        executable='cmd_vel_watchdog',
+        name='vayron_cmd_vel_watchdog',
+        parameters=[control_config, {'use_sim_time': True}],
         output='screen',
     )
 
     gazebo = ExecuteProcess(
         cmd=[
-            'gazebo', '--verbose',
+            'gazebo',
+            '--verbose',
             '-s', 'libgazebo_ros_init.so',
             '-s', 'libgazebo_ros_factory.so',
             world_file,
@@ -65,7 +70,9 @@ def generate_launch_description():
         arguments=[
             '-entity', 'vayron',
             '-topic', 'robot_description',
-            '-x', '0', '-y', '0', '-z', '0.10',
+            '-x', '0',
+            '-y', '0',
+            '-z', '0.10',
         ],
         output='screen',
     )

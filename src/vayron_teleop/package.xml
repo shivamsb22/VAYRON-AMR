@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>vayron_teleop</name>
+  <version>0.1.0</version>
+  <description>Keyboard teleoperation for VAYRON AMR</description>
+  <maintainer email="yourrjerry@gmail.com">Jerry</maintainer>
+  <license>Apache-2.0</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

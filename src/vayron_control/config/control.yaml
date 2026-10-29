@@ -1,0 +1,7 @@
+vayron_cmd_vel_watchdog:
+  ros__parameters:
+    input_topic: "/cmd_vel"
+    output_topic: "/cmd_vel_safe"
+    timeout_sec: 0.5
+    max_linear_speed: 0.25
+    max_angular_speed: 1.5

@@ -1,0 +1,8 @@
+vayron_serial_bridge:
+  ros__parameters:
+    port: "/dev/ttyACM0"
+    baud_rate: 115200
+    wheel_separation: 0.19
+    max_linear_speed: 0.25
+    cmd_vel_topic: "/cmd_vel_safe"
+    publish_odom: true

@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <robot name="vayron" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  <xacro:arg name="simulation" default="false"/>
+  <xacro:property name="simulation" value="$(arg simulation)"/>
   <xacro:property name="chassis_length" value="0.22"/>
   <xacro:property name="chassis_width" value="0.22"/>
   <xacro:property name="chassis_thickness" value="0.003"/>
@@ -138,8 +140,8 @@
     <origin xyz="0 0 0.006" rpy="0 0 0"/>
   </joint>
 
-  <!-- Arduino Mega -->
-  <link name="arduino_mega_link">
+  <!-- Arduino Uno -->
+  <link name="arduino_uno_link">
     <visual>
       <geometry>
         <box size="0.102 0.053 0.002"/>
@@ -147,9 +149,9 @@
       <material name="mat_black"/>
     </visual>
   </link>
-  <joint name="arduino_mega_joint" type="fixed">
+  <joint name="arduino_uno_joint" type="fixed">
     <parent link="electronics_tray"/>
-    <child link="arduino_mega_link"/>
+    <child link="arduino_uno_link"/>
     <origin xyz="0.040 0 0.012" rpy="0 0 0"/>
   </joint>
 
@@ -299,7 +301,8 @@
 
 
   <!-- Gazebo Classic simulated 360-degree LiDAR -->
-  <gazebo reference="rplidar_link">
+  <xacro:if value="$(arg simulation)">
+<gazebo reference="rplidar_link">
     <sensor name="vayron_lidar" type="ray">
       <pose>0 0 0 0 0 0</pose>
       <visualize>true</visualize>
@@ -338,10 +341,12 @@
       </plugin>
     </sensor>
   </gazebo>
+  </xacro:if>
 
 
   <!-- VAYRON differential drive controller for Gazebo Classic -->
-  <gazebo>
+  <xacro:if value="$(arg simulation)">
+<gazebo>
     <plugin name="vayron_diff_drive"
             filename="libgazebo_ros_diff_drive.so">
 
@@ -383,9 +388,11 @@
 
     </plugin>
   </gazebo>
+  </xacro:if>
 
   <!-- Publish actual Gazebo wheel joint states -->
-  <gazebo>
+  <xacro:if value="$(arg simulation)">
+<gazebo>
     <plugin name="gazebo_joint_state_publisher"
             filename="libgazebo_ros_joint_state_publisher.so">
       <ros>
@@ -401,6 +408,7 @@
       <joint_name>rear_right_wheel_joint</joint_name>
     </plugin>
   </gazebo>
+  </xacro:if>
 
 
 

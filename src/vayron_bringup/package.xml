@@ -1,16 +1,27 @@
 <?xml version="1.0"?>
-<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>vayron_bringup</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="yourrjerry@gmail.com">jerry</maintainer>
-  <license>TODO: License declaration</license>
+  <version>0.1.0</version>
+  <description>Unified simulation and hardware bringup for VAYRON AMR</description>
+  <maintainer email="yourrjerry@gmail.com">Jerry</maintainer>
+  <license>Apache-2.0</license>
 
-  <test_depend>ament_copyright</test_depend>
-  <test_depend>ament_flake8</test_depend>
-  <test_depend>ament_pep257</test_depend>
-  <test_depend>python3-pytest</test_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>vayron_description</exec_depend>
+  <exec_depend>vayron_simulation</exec_depend>
+  <exec_depend>vayron_hardware</exec_depend>
+  <exec_depend>vayron_control</exec_depend>
+  <exec_depend>vayron_teleop</exec_depend>
+  <exec_depend>vayron_perception</exec_depend>
+  <exec_depend>vayron_navigation</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>nav2_bringup</exec_depend>
+  <exec_depend>slam_toolbox</exec_depend>
 
   <export>
     <build_type>ament_python</build_type>
