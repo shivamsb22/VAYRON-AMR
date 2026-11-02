@@ -3,9 +3,9 @@
 <package format="3">
   <name>vayron_description</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Robot model, URDF/Xacro, meshes and visualization resources for VAYRON AMR.</description>
   <maintainer email="yourrjerry@gmail.com">jerry</maintainer>
-  <license>TODO: License declaration</license>
+  <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
@@ -21,6 +21,4 @@
   <exec_depend>joint_state_publisher</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <exec_depend>gazebo_ros</exec_depend>
-  <exec_depend>rclpy</exec_depend>
-  <exec_depend>geometry_msgs</exec_depend>
 </package>

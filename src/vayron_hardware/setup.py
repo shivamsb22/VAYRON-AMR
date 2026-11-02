@@ -9,17 +9,28 @@ setup(
     version='0.1.0',
     packages=find_packages(exclude=['test']),
     data_files=[
-        ('share/ament_index/resource_index/packages',
-         ['resource/' + package_name]),
-        ('share/' + package_name, ['package.xml']),
-        (os.path.join('share', package_name, 'config'),
-         glob('config/*.yaml')),
+        (
+            'share/ament_index/resource_index/packages',
+            ['resource/' + package_name]
+        ),
+        (
+            'share/' + package_name,
+            ['package.xml']
+        ),
+        (
+            os.path.join('share', package_name, 'config'),
+            glob('config/*.yaml')
+        ),
+        (
+            os.path.join('share', package_name, 'launch'),
+            glob('launch/*.launch.py')
+        ),
     ],
     install_requires=['setuptools', 'pyserial'],
     zip_safe=True,
     maintainer='Jerry',
     maintainer_email='yourrjerry@gmail.com',
-    description='USB serial hardware bridge for VAYRON AMR',
+    description='USB serial hardware interface for VAYRON AMR',
     license='Apache-2.0',
     entry_points={
         'console_scripts': [

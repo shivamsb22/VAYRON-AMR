@@ -9,17 +9,28 @@ setup(
     version='0.1.0',
     packages=find_packages(exclude=['test']),
     data_files=[
-        ('share/ament_index/resource_index/packages',
-         ['resource/' + package_name]),
-        ('share/' + package_name, ['package.xml']),
-        (os.path.join('share', package_name, 'config'),
-         glob('config/*.yaml')),
+        (
+            'share/ament_index/resource_index/packages',
+            ['resource/' + package_name]
+        ),
+        (
+            'share/' + package_name,
+            ['package.xml']
+        ),
+        (
+            os.path.join('share', package_name, 'config'),
+            glob('config/*.yaml')
+        ),
+        (
+            os.path.join('share', package_name, 'launch'),
+            glob('launch/*.launch.py')
+        ),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='Jerry',
     maintainer_email='yourrjerry@gmail.com',
-    description='Command safety and watchdog for VAYRON AMR',
+    description='Command safety and control for VAYRON AMR',
     license='Apache-2.0',
     entry_points={
         'console_scripts': [
