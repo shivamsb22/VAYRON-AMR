@@ -1,0 +1,88 @@
+import FreeCAD as App
+import Part
+import Mesh
+import Import
+import os
+import csv
+
+STEP_FILE = os.path.expanduser(
+    "~/Downloads/4WD arduino buggy.stp"
+)
+
+OUTPUT_DIR = os.path.expanduser(
+    "~/vayron_ws/src/vayron_description/meshes/cad"
+)
+
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+doc = App.newDocument("VAYRON_CAD")
+
+Import.insert(STEP_FILE, doc.Name)
+doc.recompute()
+
+report_path = os.path.join(
+    OUTPUT_DIR, "cad_measurements.csv"
+)
+
+with open(report_path, "w") as report:
+    writer = csv.writer(report)
+
+    writer.writerow([
+        "index", "object_name",
+        "solid_count",
+        "xmin", "ymin", "zmin",
+        "xmax", "ymax", "zmax",
+        "length", "width", "height",
+        "volume"
+    ])
+
+    index = 0
+
+    for obj in doc.Objects:
+        if not hasattr(obj, "Shape"):
+            continue
+
+        shape = obj.Shape
+
+        if shape.isNull():
+            continue
+
+        solids = shape.Solids
+
+        if not solids:
+            continue
+
+        for solid in solids:
+            index += 1
+
+            name = "cad_part_%03d" % index
+
+            mesh_path = os.path.join(
+                OUTPUT_DIR, name + ".stl"
+            )
+
+            Mesh.export([obj], mesh_path)
+
+            bb = solid.BoundBox
+
+            writer.writerow([
+                index,
+                obj.Name,
+                len(solids),
+                bb.XMin, bb.YMin, bb.ZMin,
+                bb.XMax, bb.YMax, bb.ZMax,
+                bb.XLength, bb.YLength, bb.ZLength,
+                solid.Volume
+            ])
+
+App.Console.PrintMessage(
+    "\nExport completed: %d solids\n" % index
+)
+
+App.Console.PrintMessage(
+    "Output: " + OUTPUT_DIR + "\n"
+)
+
+App.Console.PrintMessage(
+    "Measurements: " + report_path + "\n"
+)

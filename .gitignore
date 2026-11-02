@@ -15,3 +15,14 @@ log/
 # Generated ROS and Python files
 __pycache__/
 *.py[cod]
+
+# Local working backups (kept outside Git)
+README_backup.md
+*.backup
+*_before_3layer.xacro
+*_before_electronics_update.xacro
+*_pre_geometry_update.xacro
+*_working_backup.xacro
+
+# Empty inspection export
+cad_export/inspection.txt
