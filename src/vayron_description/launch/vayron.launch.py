@@ -34,8 +34,8 @@ def generate_launch_description():
     )
 
     watchdog = Node(
-        package='vayron_description',
-        executable='cmd_vel_watchdog.py',
+        package='vayron_control',
+        executable='cmd_vel_watchdog',
         name='cmd_vel_watchdog',
         output='screen',
         parameters=[{
