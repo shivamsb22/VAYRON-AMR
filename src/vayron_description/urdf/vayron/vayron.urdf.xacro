@@ -3,14 +3,23 @@
 
   <xacro:arg name="simulation" default="false"/>
   <xacro:property name="simulation" value="$(arg simulation)"/>
-  <xacro:property name="chassis_length" value="0.6604"/>
-  <xacro:property name="chassis_width" value="0.381"/>
+  <!-- Reference chassis dimensions in metres -->
+  <xacro:property name="chassis_length" value="0.257"/>
+  <xacro:property name="chassis_width" value="0.150"/>
   <xacro:property name="chassis_thickness" value="0.003"/>
-  <xacro:property name="wheel_radius" value="0.0325"/>
-  <xacro:property name="wheel_width" value="0.025"/>
-  <xacro:property name="wheel_x" value="0.14605"/>
-  <xacro:property name="wheel_y" value="0.1651"/>
-  <xacro:property name="wheel_z" value="-0.035"/>
+
+  <!-- Four-wheel differential drive geometry -->
+  <xacro:property name="wheel_radius" value="0.033625"/>
+  <xacro:property name="wheel_width" value="0.02019"/>
+  <xacro:property name="wheel_x" value="0.065085"/>
+  <xacro:property name="wheel_y" value="0.058565"/>
+  <xacro:property name="wheel_z" value="-0.033875"/>
+
+  <!-- Three-layer chassis -->
+  <xacro:property name="plate_gap" value="0.0762"/>
+  <xacro:property name="plate_center_spacing" value="0.0792"/>
+  <xacro:property name="spacer_height" value="0.0762"/>
+  <xacro:property name="spacer_radius" value="0.004"/>
 
   <material name="mat_white">
     <color rgba="0.88 0.90 0.92 1"/>
@@ -56,6 +65,80 @@
     <origin xyz="0 0 0.0675" rpy="0 0 0"/>
   </joint>
 
+
+  <!-- Middle and upper chassis plates -->
+  <xacro:macro name="chassis_plate" params="name z">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <box size="${chassis_length} ${chassis_width} ${chassis_thickness}"/>
+        </geometry>
+        <material name="mat_metal"/>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="${chassis_length} ${chassis_width} ${chassis_thickness}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.35"/>
+        <inertia ixx="0.00070" ixy="0" ixz="0"
+                 iyy="0.00195" iyz="0" izz="0.00260"/>
+      </inertial>
+    </link>
+
+    <joint name="${name}_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="${name}"/>
+      <origin xyz="0 0 ${z}" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:chassis_plate name="middle_plate"
+                       z="${plate_center_spacing}"/>
+  <xacro:chassis_plate name="upper_plate"
+                       z="${2 * plate_center_spacing}"/>
+
+  <!-- Eight provisional cylindrical spacers -->
+  <xacro:macro name="spacer" params="name x y z">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <cylinder radius="${spacer_radius}" length="${spacer_height}"/>
+        </geometry>
+        <material name="mat_metal"/>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder radius="${spacer_radius}" length="${spacer_height}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.025"/>
+        <inertia ixx="0.00002" ixy="0" ixz="0"
+                 iyy="0.00002" iyz="0" izz="0.000001"/>
+      </inertial>
+    </link>
+
+    <joint name="${name}_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="${name}"/>
+      <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Lower spacer level -->
+  <xacro:spacer name="spacer_lower_fl" x="0.105" y="0.052" z="0.0396"/>
+  <xacro:spacer name="spacer_lower_fr" x="0.105" y="-0.052" z="0.0396"/>
+  <xacro:spacer name="spacer_lower_rl" x="-0.105" y="0.052" z="0.0396"/>
+  <xacro:spacer name="spacer_lower_rr" x="-0.105" y="-0.052" z="0.0396"/>
+
+  <!-- Upper spacer level -->
+  <xacro:spacer name="spacer_upper_fl" x="0.105" y="0.052" z="0.1188"/>
+  <xacro:spacer name="spacer_upper_fr" x="0.105" y="-0.052" z="0.1188"/>
+  <xacro:spacer name="spacer_upper_rl" x="-0.105" y="0.052" z="0.1188"/>
+  <xacro:spacer name="spacer_upper_rr" x="-0.105" y="-0.052" z="0.1188"/>
+
   <!-- Four conventional wheels -->
   <xacro:macro name="wheel" params="name x y side">
     <link name="${name}">
@@ -94,113 +177,112 @@
   <xacro:wheel name="front_right_wheel" x="${wheel_x}"  y="${-wheel_y}" side="right"/>
   <xacro:wheel name="rear_right_wheel"  x="${-wheel_x}" y="${-wheel_y}" side="right"/>
 
-  <!-- Electronics tray -->
+
+  <!-- Electronics tray mounted on the middle plate -->
   <link name="electronics_tray">
     <visual>
-      <origin xyz="0 0 0"/>
       <geometry>
-        <box size="0.19 0.19 0.002"/>
+        <box size="0.225 0.140 0.002"/>
       </geometry>
       <material name="mat_metal"/>
     </visual>
   </link>
+
   <joint name="electronics_tray_joint" type="fixed">
-    <parent link="base_link"/>
+    <parent link="middle_plate"/>
     <child link="electronics_tray"/>
-    <origin xyz="0 0 0.035" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0025" rpy="0 0 0"/>
   </joint>
 
-  <!-- Raspberry Pi board -->
+  <!-- Raspberry Pi 4B -->
   <link name="raspberry_pi_link">
     <visual>
-      <geometry>
-        <box size="0.085 0.056 0.002"/>
-      </geometry>
+      <geometry><box size="0.085 0.056 0.002"/></geometry>
       <material name="mat_black"/>
     </visual>
   </link>
+
   <joint name="raspberry_pi_joint" type="fixed">
     <parent link="electronics_tray"/>
     <child link="raspberry_pi_link"/>
-    <origin xyz="-0.035 0 0.012" rpy="0 0 0"/>
+    <origin xyz="-0.060 0.020 0.002" rpy="0 0 0"/>
   </joint>
 
   <!-- Raspberry Pi cooling fan -->
   <link name="pi_fan_link">
     <visual>
-      <geometry>
-        <box size="0.030 0.030 0.008"/>
-      </geometry>
+      <geometry><box size="0.030 0.030 0.008"/></geometry>
       <material name="mat_black"/>
     </visual>
   </link>
+
   <joint name="pi_fan_joint" type="fixed">
     <parent link="raspberry_pi_link"/>
     <child link="pi_fan_link"/>
-    <origin xyz="0 0 0.006" rpy="0 0 0"/>
+    <origin xyz="0 0 0.007" rpy="0 0 0"/>
   </joint>
 
-  <!-- Arduino Uno -->
+  <!-- Arduino Uno R3 -->
   <link name="arduino_uno_link">
     <visual>
-      <geometry>
-        <box size="0.102 0.053 0.002"/>
-      </geometry>
+      <geometry><box size="0.102 0.053 0.002"/></geometry>
       <material name="mat_black"/>
     </visual>
   </link>
+
   <joint name="arduino_uno_joint" type="fixed">
     <parent link="electronics_tray"/>
     <child link="arduino_uno_link"/>
-    <origin xyz="0.040 0 0.012" rpy="0 0 0"/>
+    <origin xyz="0.055 0.020 0.002" rpy="0 0 0"/>
   </joint>
 
-  <!-- Integrated angular upper body -->
+  <!-- L298N motor driver visual placeholder -->
+  <link name="l298n_link">
+    <visual>
+      <geometry><box size="0.043 0.043 0.025"/></geometry>
+      <material name="mat_black"/>
+    </visual>
+  </link>
+
+  <joint name="l298n_joint" type="fixed">
+    <parent link="electronics_tray"/>
+    <child link="l298n_link"/>
+    <origin xyz="0.055 -0.045 0.0135" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Battery visual placeholder -->
+  <link name="battery_link">
+    <visual>
+      <geometry><box size="0.070 0.040 0.025"/></geometry>
+      <material name="mat_black"/>
+    </visual>
+  </link>
+
+  <joint name="battery_joint" type="fixed">
+    <parent link="electronics_tray"/>
+    <child link="battery_link"/>
+    <origin xyz="-0.065 -0.045 0.0135" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Upper shell mounted on the upper plate -->
   <link name="upper_shell">
-    <!-- Main body -->
     <visual>
-      <origin xyz="0 0 0"/>
-      <geometry><box size="0.155 0.17 0.045"/></geometry>
+      <origin xyz="0 0 0.0225"/>
+      <geometry><box size="0.155 0.120 0.045"/></geometry>
       <material name="mat_white"/>
     </visual>
 
-    <!-- Black top deck -->
     <visual>
-      <origin xyz="0 0 0.025"/>
-      <geometry><box size="0.175 0.18 0.006"/></geometry>
-      <material name="mat_black"/>
-    </visual>
-
-    <!-- Slanted left and right side armor -->
-    <visual>
-      <origin xyz="0 0.079 -0.002" rpy="0 0.12 0"/>
-      <geometry><box size="0.135 0.012 0.040"/></geometry>
-      <material name="mat_white"/>
-    </visual>
-    <visual>
-      <origin xyz="0 -0.079 -0.002" rpy="0 -0.12 0"/>
-      <geometry><box size="0.135 0.012 0.040"/></geometry>
-      <material name="mat_white"/>
-    </visual>
-
-    <!-- Front dark sensor fascia -->
-    <visual>
-      <origin xyz="0.079 0 -0.002" rpy="0 0.12 0"/>
-      <geometry><box size="0.012 0.132 0.030"/></geometry>
-      <material name="mat_black"/>
-    </visual>
-
-    <!-- Rear dark service panel -->
-    <visual>
-      <origin xyz="-0.079 0 -0.002"/>
-      <geometry><box size="0.010 0.12 0.028"/></geometry>
+      <origin xyz="0 0 0.048"/>
+      <geometry><box size="0.175 0.140 0.006"/></geometry>
       <material name="mat_black"/>
     </visual>
 
     <collision>
-      <origin xyz="0 0 0"/>
-      <geometry><box size="0.155 0.17 0.045"/></geometry>
+      <origin xyz="0 0 0.0225"/>
+      <geometry><box size="0.155 0.120 0.045"/></geometry>
     </collision>
+
     <inertial>
       <mass value="0.45"/>
       <inertia ixx="0.0012" ixy="0" ixz="0"
@@ -209,9 +291,9 @@
   </link>
 
   <joint name="upper_shell_joint" type="fixed">
-    <parent link="base_link"/>
+    <parent link="upper_plate"/>
     <child link="upper_shell"/>
-    <origin xyz="0 0 0.055" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0015" rpy="0 0 0"/>
   </joint>
 
   <!-- Amber front light strip -->
@@ -221,36 +303,35 @@
       <material name="mat_amber"/>
     </visual>
   </link>
+
   <joint name="front_amber_panel_joint" type="fixed">
     <parent link="upper_shell"/>
     <child link="front_amber_panel"/>
-    <origin xyz="0.086 0 -0.009" rpy="0 0 0"/>
+    <origin xyz="0.079 0 0.0225" rpy="0 0 0"/>
   </joint>
 
-  <!-- LiDAR mounting post and scanner -->
+  <!-- LiDAR mounting post on upper plate -->
   <link name="lidar_mount">
     <visual>
-      <geometry>
-        <cylinder radius="0.012" length="0.018"/>
-      </geometry>
+      <geometry><cylinder radius="0.012" length="0.018"/></geometry>
       <material name="mat_metal"/>
     </visual>
   </link>
+
   <joint name="lidar_mount_joint" type="fixed">
-    <parent link="base_link"/>
+    <parent link="upper_plate"/>
     <child link="lidar_mount"/>
-    <origin xyz="0 0 0.113" rpy="0 0 0"/>
+    <origin xyz="0 0 0.062" rpy="0 0 0"/>
   </joint>
 
+  <!-- RPLIDAR C1 visual representation -->
   <link name="laser">
     <visual>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder radius="0.048" length="0.055"/>
-      </geometry>
+      <geometry><cylinder radius="0.048" length="0.055"/></geometry>
       <material name="mat_black"/>
     </visual>
   </link>
+
   <joint name="rplidar_joint" type="fixed">
     <parent link="lidar_mount"/>
     <child link="laser"/>
@@ -324,12 +405,12 @@
 
 
       <!-- Front wheel pair -->
-      <wheel_separation>0.3302</wheel_separation>
-      <wheel_diameter>0.065</wheel_diameter>
+      <wheel_separation>0.11713</wheel_separation>
+      <wheel_diameter>0.06725</wheel_diameter>
 
       <!-- Rear wheel pair -->
-      <wheel_separation>0.3302</wheel_separation>
-      <wheel_diameter>0.065</wheel_diameter>
+      <wheel_separation>0.11713</wheel_separation>
+      <wheel_diameter>0.06725</wheel_diameter>
 
       <max_wheel_torque>5.0</max_wheel_torque>
       <max_wheel_acceleration>2.0</max_wheel_acceleration>
