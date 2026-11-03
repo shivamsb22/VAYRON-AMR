@@ -27,6 +27,9 @@ def generate_launch_description():
                 'serial_port': serial_port
             }
         ],
+        remappings=[
+            ('/scan', '/scan_real')
+        ],
     )
 
     return LaunchDescription([
