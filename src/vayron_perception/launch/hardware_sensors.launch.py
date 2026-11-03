@@ -1,37 +1,32 @@
-
 from launch import LaunchDescription
-from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
+from ament_index_python.packages import get_package_share_directory
+import os
 
 
 def generate_launch_description():
-    lidar = Node(
-        package='rplidar_ros',
-        executable='rplidar_node',
-        name='vayron_lidar',
-        output='screen',
-        parameters=[{
-            'serial_port': '/dev/ttyUSB0',
-            'serial_baudrate': 115200,
-            'frame_id': 'rplidar_link',
-            'angle_compensate': True,
-            'scan_mode': 'Standard',
-        }],
-        remappings=[
-            ('/scan', '/scan'),
-        ],
+
+    perception_share = get_package_share_directory('vayron_perception')
+
+    lidar_launch = os.path.join(
+        perception_share,
+        'launch',
+        'lidar_c1.launch.py'
     )
 
-    camera = Node(
-        package='v4l2_camera',
-        executable='v4l2_camera_node',
-        name='vayron_camera',
-        output='screen',
-        parameters=[{
-            'video_device': '/dev/video0',
-            'camera_frame_id': 'camera_optical_frame',
-            'image_size': [640, 480],
-            'time_per_frame': [1, 30],
-        }],
-    )
+    return LaunchDescription([
+        DeclareLaunchArgument(
+            'serial_port',
+            default_value='/dev/ttyUSB0',
+            description='Serial port for RPLIDAR C1'
+        ),
 
-    return LaunchDescription([lidar, camera])
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(lidar_launch),
+            launch_arguments={
+                'serial_port': LaunchConfiguration('serial_port')
+            }.items()
+        )
+    ])
