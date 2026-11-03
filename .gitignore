@@ -26,3 +26,11 @@ README_backup.md
 
 # Empty inspection export
 cad_export/inspection.txt
+
+# Generated TF visualization files
+frames*.pdf
+frames*.gv
+
+# ROS generated files
+*.db3
+*.mcap
