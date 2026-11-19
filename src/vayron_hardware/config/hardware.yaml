@@ -1,6 +1,6 @@
 vayron_serial_bridge:
   ros__parameters:
-    port: "/dev/ttyACM0"
+    port: "/dev/vayron_arduino"
     baud_rate: 115200
 
     wheel_separation: 0.3429
