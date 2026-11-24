@@ -1,10 +1,10 @@
 vayron_serial_bridge:
   ros__parameters:
-    port: "/dev/vayron_arduino"
+    port: "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0"
     baud_rate: 115200
 
-    wheel_separation: 0.3429
-    wheel_radius: 0.0325
+    wheel_separation: 0.15018
+    wheel_radius: 0.033
 
     max_linear_speed: 0.25
     cmd_vel_topic: "/cmd_vel_safe"

@@ -22,13 +22,14 @@ class VayronSerialBridge(Node):
 
         self.declare_parameter('port', '/dev/ttyACM0')
         self.declare_parameter('baud_rate', 115200)
-        self.declare_parameter('wheel_separation', 0.3429)
-        self.declare_parameter('wheel_radius', 0.0325)
+        self.declare_parameter('wheel_separation', 0.15018)
+        self.declare_parameter('wheel_radius', 0.033)
         self.declare_parameter('max_linear_speed', 0.25)
         self.declare_parameter('cmd_vel_topic', '/cmd_vel_safe')
         self.declare_parameter('command_timeout', 0.5)
         self.declare_parameter('reconnect_interval', 2.0)
         self.declare_parameter('publish_odom', True)
+        self.declare_parameter('motor_enabled', False)
 
         self.wheel_separation = float(
             self.get_parameter('wheel_separation').value
@@ -155,8 +156,11 @@ class VayronSerialBridge(Node):
 
     def send_motor_command(self):
         age = time.monotonic() - self.last_command_time
+        motor_enabled = bool(
+            self.get_parameter('motor_enabled').value
+        )
 
-        if age > self.command_timeout:
+        if not motor_enabled or age > self.command_timeout:
             left = 0.0
             right = 0.0
         else:
@@ -247,8 +251,12 @@ class VayronSerialBridge(Node):
 
         age = time.monotonic() - self.last_command_time
 
-        v = self.linear if age <= self.command_timeout else 0.0
-        w = self.angular if age <= self.command_timeout else 0.0
+        motor_enabled = bool(
+            self.get_parameter('motor_enabled').value
+        )
+        active = motor_enabled and age <= self.command_timeout
+        v = self.linear if active else 0.0
+        w = self.angular if active else 0.0
 
         self.x += v * math.cos(self.yaw) * dt
         self.y += v * math.sin(self.yaw) * dt

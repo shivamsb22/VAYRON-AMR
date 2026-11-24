@@ -3,36 +3,41 @@
 
   <xacro:arg name="simulation" default="false"/>
   <xacro:property name="simulation" value="$(arg simulation)"/>
-  <!-- Reference chassis dimensions in metres -->
+
+  <!-- Chassis dimensions -->
   <xacro:property name="chassis_length" value="0.257"/>
   <xacro:property name="chassis_width" value="0.150"/>
-  <xacro:property name="chassis_thickness" value="0.003"/>
+  <xacro:property name="chassis_thickness" value="0.002"/>
 
   <!-- Four-wheel differential drive geometry -->
-  <xacro:property name="wheel_radius" value="0.033625"/>
+  <xacro:property name="wheel_radius" value="0.033"/>
   <xacro:property name="wheel_width" value="0.02019"/>
   <xacro:property name="wheel_x" value="0.065085"/>
-  <xacro:property name="wheel_y" value="0.058565"/>
-  <xacro:property name="wheel_z" value="-0.033875"/>
+  <xacro:property name="wheel_y" value="0.07509"/>
+  <xacro:property name="wheel_z" value="-0.010"/>
 
   <!-- Three-layer chassis -->
-  <xacro:property name="plate_gap" value="0.0762"/>
-  <xacro:property name="plate_center_spacing" value="0.0792"/>
-  <xacro:property name="spacer_height" value="0.0762"/>
+  <xacro:property name="plate_gap" value="0.031"/>
+  <xacro:property name="plate_center_spacing" value="0.033"/>
+  <xacro:property name="spacer_height" value="0.031"/>
   <xacro:property name="spacer_radius" value="0.004"/>
 
   <material name="mat_white">
     <color rgba="0.88 0.90 0.92 1"/>
   </material>
+
   <material name="mat_black">
     <color rgba="0.035 0.045 0.060 1"/>
   </material>
+
   <material name="mat_rubber">
     <color rgba="0.10 0.11 0.12 1"/>
   </material>
+
   <material name="mat_amber">
     <color rgba="1.0 0.32 0.025 1"/>
   </material>
+
   <material name="mat_metal">
     <color rgba="0.55 0.58 0.62 1"/>
   </material>
@@ -47,11 +52,13 @@
       </geometry>
       <material name="mat_black"/>
     </visual>
+
     <collision>
       <geometry>
         <box size="${chassis_length} ${chassis_width} ${chassis_thickness}"/>
       </geometry>
     </collision>
+
     <inertial>
       <mass value="1.5"/>
       <inertia ixx="0.012" ixy="0" ixz="0"
@@ -62,9 +69,8 @@
   <joint name="base_footprint_joint" type="fixed">
     <parent link="base_footprint"/>
     <child link="base_link"/>
-    <origin xyz="0 0 0.0675" rpy="0 0 0"/>
+    <origin xyz="0 0 0.043" rpy="0 0 0"/>
   </joint>
-
 
   <!-- Middle and upper chassis plates -->
   <xacro:macro name="chassis_plate" params="name z">
@@ -75,11 +81,13 @@
         </geometry>
         <material name="mat_metal"/>
       </visual>
+
       <collision>
         <geometry>
           <box size="${chassis_length} ${chassis_width} ${chassis_thickness}"/>
         </geometry>
       </collision>
+
       <inertial>
         <mass value="0.35"/>
         <inertia ixx="0.00070" ixy="0" ixz="0"
@@ -96,10 +104,11 @@
 
   <xacro:chassis_plate name="middle_plate"
                        z="${plate_center_spacing}"/>
+
   <xacro:chassis_plate name="upper_plate"
                        z="${2 * plate_center_spacing}"/>
 
-  <!-- Eight provisional cylindrical spacers -->
+  <!-- Spacer macro -->
   <xacro:macro name="spacer" params="name x y z">
     <link name="${name}">
       <visual>
@@ -108,11 +117,13 @@
         </geometry>
         <material name="mat_metal"/>
       </visual>
+
       <collision>
         <geometry>
           <cylinder radius="${spacer_radius}" length="${spacer_height}"/>
         </geometry>
       </collision>
+
       <inertial>
         <mass value="0.025"/>
         <inertia ixx="0.00002" ixy="0" ixz="0"
@@ -128,16 +139,16 @@
   </xacro:macro>
 
   <!-- Lower spacer level -->
-  <xacro:spacer name="spacer_lower_fl" x="0.105" y="0.052" z="0.0396"/>
-  <xacro:spacer name="spacer_lower_fr" x="0.105" y="-0.052" z="0.0396"/>
-  <xacro:spacer name="spacer_lower_rl" x="-0.105" y="0.052" z="0.0396"/>
-  <xacro:spacer name="spacer_lower_rr" x="-0.105" y="-0.052" z="0.0396"/>
+  <xacro:spacer name="spacer_lower_fl" x="0.105" y="0.052" z="0.0165"/>
+  <xacro:spacer name="spacer_lower_fr" x="0.105" y="-0.052" z="0.0165"/>
+  <xacro:spacer name="spacer_lower_rl" x="-0.105" y="0.052" z="0.0165"/>
+  <xacro:spacer name="spacer_lower_rr" x="-0.105" y="-0.052" z="0.0165"/>
 
   <!-- Upper spacer level -->
-  <xacro:spacer name="spacer_upper_fl" x="0.105" y="0.052" z="0.1188"/>
-  <xacro:spacer name="spacer_upper_fr" x="0.105" y="-0.052" z="0.1188"/>
-  <xacro:spacer name="spacer_upper_rl" x="-0.105" y="0.052" z="0.1188"/>
-  <xacro:spacer name="spacer_upper_rr" x="-0.105" y="-0.052" z="0.1188"/>
+  <xacro:spacer name="spacer_upper_fl" x="0.105" y="0.052" z="0.0495"/>
+  <xacro:spacer name="spacer_upper_fr" x="0.105" y="-0.052" z="0.0495"/>
+  <xacro:spacer name="spacer_upper_rl" x="-0.105" y="0.052" z="0.0495"/>
+  <xacro:spacer name="spacer_upper_rr" x="-0.105" y="-0.052" z="0.0495"/>
 
   <!-- Four conventional wheels -->
   <xacro:macro name="wheel" params="name x y side">
@@ -149,12 +160,14 @@
         </geometry>
         <material name="mat_rubber"/>
       </visual>
+
       <collision>
         <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
         <geometry>
           <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
         </geometry>
       </collision>
+
       <inertial>
         <mass value="0.20"/>
         <inertia ixx="0.00015" ixy="0" ixz="0"
@@ -172,13 +185,19 @@
     </joint>
   </xacro:macro>
 
-  <xacro:wheel name="front_left_wheel"  x="${wheel_x}"  y="${wheel_y}"  side="left"/>
-  <xacro:wheel name="rear_left_wheel"   x="${-wheel_x}" y="${wheel_y}"  side="left"/>
-  <xacro:wheel name="front_right_wheel" x="${wheel_x}"  y="${-wheel_y}" side="right"/>
-  <xacro:wheel name="rear_right_wheel"  x="${-wheel_x}" y="${-wheel_y}" side="right"/>
+  <xacro:wheel name="front_left_wheel"
+               x="${wheel_x}" y="${wheel_y}" side="left"/>
 
+  <xacro:wheel name="rear_left_wheel"
+               x="${-wheel_x}" y="${wheel_y}" side="left"/>
 
-  <!-- Electronics tray mounted on the middle plate -->
+  <xacro:wheel name="front_right_wheel"
+               x="${wheel_x}" y="${-wheel_y}" side="right"/>
+
+  <xacro:wheel name="rear_right_wheel"
+               x="${-wheel_x}" y="${-wheel_y}" side="right"/>
+
+  <!-- Electronics tray mounted on middle plate -->
   <link name="electronics_tray">
     <visual>
       <geometry>
@@ -197,7 +216,9 @@
   <!-- Raspberry Pi 4B -->
   <link name="raspberry_pi_link">
     <visual>
-      <geometry><box size="0.085 0.056 0.002"/></geometry>
+      <geometry>
+        <box size="0.085 0.056 0.002"/>
+      </geometry>
       <material name="mat_black"/>
     </visual>
   </link>
@@ -211,7 +232,9 @@
   <!-- Raspberry Pi cooling fan -->
   <link name="pi_fan_link">
     <visual>
-      <geometry><box size="0.030 0.030 0.008"/></geometry>
+      <geometry>
+        <box size="0.030 0.030 0.008"/>
+      </geometry>
       <material name="mat_black"/>
     </visual>
   </link>
@@ -225,7 +248,9 @@
   <!-- Arduino Uno R3 -->
   <link name="arduino_uno_link">
     <visual>
-      <geometry><box size="0.102 0.053 0.002"/></geometry>
+      <geometry>
+        <box size="0.102 0.053 0.002"/>
+      </geometry>
       <material name="mat_black"/>
     </visual>
   </link>
@@ -236,10 +261,12 @@
     <origin xyz="0.055 0.020 0.002" rpy="0 0 0"/>
   </joint>
 
-  <!-- L298N motor driver visual placeholder -->
+  <!-- L298N motor driver placeholder -->
   <link name="l298n_link">
     <visual>
-      <geometry><box size="0.043 0.043 0.025"/></geometry>
+      <geometry>
+        <box size="0.043 0.043 0.025"/>
+      </geometry>
       <material name="mat_black"/>
     </visual>
   </link>
@@ -250,10 +277,12 @@
     <origin xyz="0.055 -0.045 0.0135" rpy="0 0 0"/>
   </joint>
 
-  <!-- Battery visual placeholder -->
+  <!-- Battery placeholder -->
   <link name="battery_link">
     <visual>
-      <geometry><box size="0.070 0.040 0.025"/></geometry>
+      <geometry>
+        <box size="0.070 0.040 0.025"/>
+      </geometry>
       <material name="mat_black"/>
     </visual>
   </link>
@@ -264,56 +293,14 @@
     <origin xyz="-0.065 -0.045 0.0135" rpy="0 0 0"/>
   </joint>
 
-  <!-- Upper shell mounted on the upper plate -->
-  <link name="upper_shell">
-    <visual>
-      <origin xyz="0 0 0.0225"/>
-      <geometry><box size="0.155 0.120 0.045"/></geometry>
-      <material name="mat_white"/>
-    </visual>
+  <!-- Open acrylic top: no artificial upper enclosure. -->
 
-    <visual>
-      <origin xyz="0 0 0.048"/>
-      <geometry><box size="0.175 0.140 0.006"/></geometry>
-      <material name="mat_black"/>
-    </visual>
-
-    <collision>
-      <origin xyz="0 0 0.0225"/>
-      <geometry><box size="0.155 0.120 0.045"/></geometry>
-    </collision>
-
-    <inertial>
-      <mass value="0.45"/>
-      <inertia ixx="0.0012" ixy="0" ixz="0"
-               iyy="0.0012" iyz="0" izz="0.0012"/>
-    </inertial>
-  </link>
-
-  <joint name="upper_shell_joint" type="fixed">
-    <parent link="upper_plate"/>
-    <child link="upper_shell"/>
-    <origin xyz="0 0 0.0015" rpy="0 0 0"/>
-  </joint>
-
-  <!-- Amber front light strip -->
-  <link name="front_amber_panel">
-    <visual>
-      <geometry><box size="0.003 0.085 0.004"/></geometry>
-      <material name="mat_amber"/>
-    </visual>
-  </link>
-
-  <joint name="front_amber_panel_joint" type="fixed">
-    <parent link="upper_shell"/>
-    <child link="front_amber_panel"/>
-    <origin xyz="0.079 0 0.0225" rpy="0 0 0"/>
-  </joint>
-
-  <!-- LiDAR mounting post on upper plate -->
+  <!-- LiDAR mount: post centre 9 mm above upper plate centre -->
   <link name="lidar_mount">
     <visual>
-      <geometry><cylinder radius="0.012" length="0.018"/></geometry>
+      <geometry>
+        <cylinder radius="0.012" length="0.018"/>
+      </geometry>
       <material name="mat_metal"/>
     </visual>
   </link>
@@ -321,13 +308,23 @@
   <joint name="lidar_mount_joint" type="fixed">
     <parent link="upper_plate"/>
     <child link="lidar_mount"/>
-    <origin xyz="0 0 0.062" rpy="0 0 0"/>
+    <origin xyz="0 0 0.009" rpy="0 0 0"/>
   </joint>
 
-  <!-- RPLIDAR C1 visual representation -->
+  <!-- LiDAR frame: 32 mm above post centre -->
   <link name="laser">
     <visual>
-      <geometry><cylinder radius="0.048" length="0.055"/></geometry>
+      <origin xyz="0 0 0.010"/>
+      <geometry>
+        <box size="0.090 0.090 0.020"/>
+      </geometry>
+      <material name="mat_black"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.038"/>
+      <geometry>
+        <cylinder radius="0.036" length="0.036"/>
+      </geometry>
       <material name="mat_black"/>
     </visual>
   </link>
@@ -335,120 +332,117 @@
   <joint name="rplidar_joint" type="fixed">
     <parent link="lidar_mount"/>
     <child link="laser"/>
-    <origin xyz="0 0 0.0365" rpy="0 0 0"/>
+    <origin xyz="-0.0015 0 0.032" rpy="0 0 0"/>
   </joint>
 
-  <!-- Gazebo Classic simulated 360-degree LiDAR -->
+  <!-- Gazebo Classic simulated LiDAR -->
   <xacro:if value="$(arg simulation)">
-<gazebo reference="laser">
-    <sensor name="vayron_lidar" type="ray">
-      <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
-      <always_on>true</always_on>
-      <update_rate>10</update_rate>
+    <gazebo reference="laser">
+      <sensor name="vayron_lidar" type="ray">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>true</visualize>
+        <always_on>true</always_on>
+        <update_rate>10</update_rate>
 
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>360</samples>
-            <resolution>1</resolution>
-            <min_angle>-3.14159265</min_angle>
-            <max_angle>3.14159265</max_angle>
-          </horizontal>
-          <vertical>
-            <samples>1</samples>
-            <resolution>1</resolution>
-            <min_angle>0</min_angle>
-            <max_angle>0</max_angle>
-          </vertical>
-        </scan>
-        <range>
-          <min>0.15</min>
-          <max>12.0</max>
-          <resolution>0.01</resolution>
-        </range>
-      </ray>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.14159265</min_angle>
+              <max_angle>3.14159265</max_angle>
+            </horizontal>
 
-      <plugin name="vayron_lidar_ros" filename="libgazebo_ros_ray_sensor.so">
+            <vertical>
+              <samples>1</samples>
+              <resolution>1</resolution>
+              <min_angle>0</min_angle>
+              <max_angle>0</max_angle>
+            </vertical>
+          </scan>
+
+          <range>
+            <min>0.15</min>
+            <max>12.0</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+
+        <plugin name="vayron_lidar_ros"
+                filename="libgazebo_ros_ray_sensor.so">
+          <ros>
+            <namespace>/</namespace>
+            <remapping>~/out:=/scan</remapping>
+          </ros>
+          <output_type>sensor_msgs/LaserScan</output_type>
+          <frame_name>laser</frame_name>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:if>
+
+  <!-- VAYRON differential drive controller -->
+  <xacro:if value="$(arg simulation)">
+    <gazebo>
+      <plugin name="vayron_diff_drive"
+              filename="libgazebo_ros_diff_drive.so">
+
         <ros>
           <namespace>/</namespace>
-          <remapping>~/out:=/scan</remapping>
+          <remapping>cmd_vel:=/cmd_vel_safe</remapping>
+          <remapping>odom:=/odom</remapping>
         </ros>
-        <output_type>sensor_msgs/LaserScan</output_type>
-        <frame_name>laser</frame_name>
+
+        <update_rate>50</update_rate>
+        <num_wheel_pairs>2</num_wheel_pairs>
+
+        <left_joint>front_left_wheel_joint</left_joint>
+        <right_joint>front_right_wheel_joint</right_joint>
+        <left_joint>rear_left_wheel_joint</left_joint>
+        <right_joint>rear_right_wheel_joint</right_joint>
+
+        <!-- Front wheel pair -->
+        <wheel_separation>0.15018</wheel_separation>
+        <wheel_diameter>0.066</wheel_diameter>
+
+        <!-- Rear wheel pair -->
+        <wheel_separation>0.15018</wheel_separation>
+        <wheel_diameter>0.066</wheel_diameter>
+
+        <max_wheel_torque>5.0</max_wheel_torque>
+        <max_wheel_acceleration>2.0</max_wheel_acceleration>
+
+        <command_topic>cmd_vel</command_topic>
+        <odometry_topic>odom</odometry_topic>
+        <odometry_frame>odom</odometry_frame>
+        <robot_base_frame>base_footprint</robot_base_frame>
+
+        <publish_odom>true</publish_odom>
+        <publish_odom_tf>true</publish_odom_tf>
+        <publish_wheel_tf>false</publish_wheel_tf>
+
       </plugin>
-    </sensor>
-  </gazebo>
+    </gazebo>
   </xacro:if>
 
-
-  <!-- VAYRON differential drive controller for Gazebo Classic -->
+  <!-- Publish Gazebo wheel joint states -->
   <xacro:if value="$(arg simulation)">
-<gazebo>
-    <plugin name="vayron_diff_drive"
-            filename="libgazebo_ros_diff_drive.so">
+    <gazebo>
+      <plugin name="gazebo_joint_state_publisher"
+              filename="libgazebo_ros_joint_state_publisher.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>joint_states:=/joint_states</remapping>
+        </ros>
 
-      <ros>
-        <namespace>/</namespace>
-        <remapping>cmd_vel:=/cmd_vel_safe</remapping>
-        <remapping>odom:=/odom</remapping>
-      </ros>
+        <update_rate>50</update_rate>
 
-      <update_rate>50</update_rate>
-      <num_wheel_pairs>2</num_wheel_pairs>
-
-      <!-- Keep each left/right pair adjacent for Gazebo Classic -->
-      <left_joint>front_left_wheel_joint</left_joint>
-      <right_joint>front_right_wheel_joint</right_joint>
-      <left_joint>rear_left_wheel_joint</left_joint>
-      <right_joint>rear_right_wheel_joint</right_joint>
-
-
-      <!-- Front wheel pair -->
-      <wheel_separation>0.11713</wheel_separation>
-      <wheel_diameter>0.06725</wheel_diameter>
-
-      <!-- Rear wheel pair -->
-      <wheel_separation>0.11713</wheel_separation>
-      <wheel_diameter>0.06725</wheel_diameter>
-
-      <max_wheel_torque>5.0</max_wheel_torque>
-      <max_wheel_acceleration>2.0</max_wheel_acceleration>
-
-      <command_topic>cmd_vel</command_topic>
-      <odometry_topic>odom</odometry_topic>
-      <odometry_frame>odom</odometry_frame>
-      <robot_base_frame>base_footprint</robot_base_frame>
-
-      <publish_odom>true</publish_odom>
-      <publish_odom_tf>true</publish_odom_tf>
-      <publish_wheel_tf>false</publish_wheel_tf>
-
-    </plugin>
-  </gazebo>
+        <joint_name>front_left_wheel_joint</joint_name>
+        <joint_name>rear_left_wheel_joint</joint_name>
+        <joint_name>front_right_wheel_joint</joint_name>
+        <joint_name>rear_right_wheel_joint</joint_name>
+      </plugin>
+    </gazebo>
   </xacro:if>
-
-  <!-- Publish actual Gazebo wheel joint states -->
-  <xacro:if value="$(arg simulation)">
-<gazebo>
-    <plugin name="gazebo_joint_state_publisher"
-            filename="libgazebo_ros_joint_state_publisher.so">
-      <ros>
-        <namespace>/</namespace>
-        <remapping>joint_states:=/joint_states</remapping>
-      </ros>
-
-      <update_rate>50</update_rate>
-
-      <joint_name>front_left_wheel_joint</joint_name>
-      <joint_name>rear_left_wheel_joint</joint_name>
-      <joint_name>front_right_wheel_joint</joint_name>
-      <joint_name>rear_right_wheel_joint</joint_name>
-    </plugin>
-  </gazebo>
-  </xacro:if>
-
-
-
 
 </robot>

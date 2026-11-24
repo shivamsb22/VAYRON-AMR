@@ -19,7 +19,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             'serial_port',
-            default_value='/dev/vayron_lidar',
+            default_value='/dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_4a325a71a0d5ef1192556b4b49d2c684-if00-port0',
             description='Serial port for RPLIDAR C1'
         ),
 

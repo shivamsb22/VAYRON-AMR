@@ -1,6 +1,6 @@
 slam_toolbox:
   ros__parameters:
-    use_sim_time: true
+    use_sim_time: false
     mode: mapping
     solver_plugin: solver_plugins::CeresSolver
     ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
@@ -11,7 +11,7 @@ slam_toolbox:
     map_frame: map
     odom_frame: odom
     base_frame: base_footprint
-    scan_topic: /scan
+    scan_topic: /scan_real
     use_map_saver: true
     resolution: 0.05
     max_laser_range: 12.0

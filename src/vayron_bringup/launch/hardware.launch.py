@@ -51,7 +51,12 @@ def generate_launch_description():
         }],
         output='screen',
     )
-
+    joint_state_publisher = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        output='screen',
+    )
     watchdog = Node(
         package='vayron_control',
         executable='cmd_vel_watchdog',
@@ -82,6 +87,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         robot_state_publisher,
+         joint_state_publisher,
         watchdog,
         serial_bridge,
         sensors,

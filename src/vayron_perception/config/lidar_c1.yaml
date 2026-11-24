@@ -1,7 +1,7 @@
 sllidar_node:
   ros__parameters:
     channel_type: "serial"
-    serial_port: "/dev/vayron_lidar"
+    serial_port: "/dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_4a325a71a0d5ef1192556b4b49d2c684-if00-port0"
     serial_baudrate: 460800
     frame_id: "laser"
     inverted: false
